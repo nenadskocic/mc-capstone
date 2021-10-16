@@ -37,8 +37,7 @@
 <script>
 </script>
 
-<style lang="scss">
-@import "@/assets/css/palette.scss";
+<style>
 .login {
   position: relative;
   height: 100vh;
@@ -49,25 +48,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 600px;
-  background-color: $dim-gray;
-}
-.row {
-  align-items: center;
-  padding: 2.5px;
-}
-.col-sm-12 {
-  padding-bottom: 20px;
-}
-#signIn {
-  margin-left: 155px;
-}
-#submitBtn {
-  margin-left: 140px;
-  padding-top: 20px;
-  width: 20%;
-}
-.row #signUpLink {
-  color: $pumpkin !important;
-  padding-top: 50px;
+  background-color: gray;
 }
 </style>
