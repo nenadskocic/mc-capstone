@@ -18,7 +18,7 @@
           <b-nav-item :to="{ name: 'contact' }">Contact Us</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav id="right">
-          <b-nav-item :to="{ name: 'login' }" id="login">Login</b-nav-item>
+          <b-nav-item :to="{ name: 'login' }" id="loginBtn"><h1>Login</h1></b-nav-item>
         </b-navbar-nav>
       </b-navbar-nav>
     </b-navbar>
@@ -29,7 +29,6 @@
 </script>
 <style>
 .navbar {
-  background-color: whitesmoke;
   position: relative;
 }
 .navbar-nav {
@@ -39,7 +38,7 @@
   height: 100px;
 }
 .navbar-dark .navbar-nav .nav-link {
-  color: black !important;
+  color: gray !important;
 }
 .navbar-brand img {
   padding-left: 10px;
@@ -50,22 +49,25 @@
   font-size: 24px;
   padding: 10px;
 }
-.navbar-dark .navbar-nav .nav-link .v1 {
-  color: gray;
-}
+
 #left {
   width: 20%;
 }
 #middle {
   justify-content: left;
+  background-color:#242526;
 }
 #right {
   width: 20%;
   justify-content: right;
   padding-right: 10px;
+  background-color: #242526;
 }
-#login {
+#loginBtn {
   background-color: rgb(254, 155, 59);
 }
-
+h1 {
+    font-size: 24px;
+    color: black;
+}
 </style>
