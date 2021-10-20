@@ -10,15 +10,17 @@
           </b-navbar-brand>
         </b-navbar-nav>
         <b-navbar-nav class="mx-auto" id="middle">
-          <b-nav-item :to="{ name: 'home' }">Home</b-nav-item>
+          <b-nav-item :to="{ name: 'home' }"><p>Home</p></b-nav-item>
           <b-nav-item :to="{ name: 'about' }">About Us</b-nav-item>
-          <b-nav-item :to="{ name: 'services' }">Services</b-nav-item>
-          <b-nav-item :to="{ name: 'news' }">News</b-nav-item>
-          <b-nav-item :to="{ name: 'team' }">Our Team</b-nav-item>
-          <b-nav-item :to="{ name: 'contact' }">Contact Us</b-nav-item>
+          <b-nav-item :to="{ name: 'services' }"><p>Services</p></b-nav-item>
+          <b-nav-item :to="{ name: 'news' }"><p>News</p></b-nav-item>
+          <b-nav-item :to="{ name: 'team' }"><p>Our Team</p></b-nav-item>
+          <b-nav-item :to="{ name: 'contact' }"><p>Contact Us</p></b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav id="right">
-          <b-nav-item :to="{ name: 'login' }" id="loginBtn"><h1>Login</h1></b-nav-item>
+          <b-nav-item :to="{ name: 'login' }" id="loginBtn"
+            ><h1>Login</h1></b-nav-item
+          >
         </b-navbar-nav>
       </b-navbar-nav>
     </b-navbar>
@@ -49,25 +51,31 @@
   font-size: 24px;
   padding: 10px;
 }
-
+.nav-item p {
+  padding: 0;
+  margin: 0;
+}
+.nav-item p:hover {
+  color: orange !important;
+}
 #left {
   width: 20%;
 }
 #middle {
   justify-content: left;
-  background-color:#242526;
+  background-color: #242526;
 }
 #right {
   width: 20%;
   justify-content: right;
-  padding-right: 10px;
+  padding-right: 20px;
   background-color: #242526;
 }
 #loginBtn {
   background-color: rgb(254, 155, 59);
 }
 h1 {
-    font-size: 24px;
-    color: black;
+  font-size: 24px;
+  color: black;
 }
 </style>
