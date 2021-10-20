@@ -2,6 +2,7 @@
   <div id="app">
     <NavBar />
     <router-view></router-view>
+    <Footer />
   </div>
 </template>
 
@@ -11,6 +12,7 @@ import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
@@ -18,7 +20,8 @@ Vue.use(BootstrapVueIcons);
 export default {
   name: "App",
   components: {
-    NavBar
+    NavBar,
+    Footer
   },
 };
 </script>
