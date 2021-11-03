@@ -11,7 +11,7 @@
         </b-navbar-nav>
         <b-navbar-nav class="mx-auto" id="middle">
           <b-nav-item :to="{ name: 'home' }"><p>Home</p></b-nav-item>
-          <b-nav-item :to="{ name: 'about' }">About Us</b-nav-item>
+          <b-nav-item :to="{ name: 'about' }"><p>About Us</p></b-nav-item>
           <b-nav-item :to="{ name: 'services' }"><p>Services</p></b-nav-item>
           <b-nav-item :to="{ name: 'news' }"><p>News</p></b-nav-item>
           <b-nav-item :to="{ name: 'team' }"><p>Our Team</p></b-nav-item>
