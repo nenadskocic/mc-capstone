@@ -22,13 +22,22 @@
       </b-row>
       <b-row id="submit">
         <b-button type="submit" class="btn btn-dark btn-lg btn-block">
-          Send
+          Submit
         </b-button>
       </b-row>
       <b-row>
-        <router-link to="/signup" id="signUpLink"
-          ><p>Forgot your password?</p></router-link
+        <router-link
+          to="/securityQuestions"
+          custom
+          v-slot="{ navigate }"
+          exact
+          :style="{ cursor: 'pointer' }"
+          id="securityLink"
         >
+          <span @click="navigate" @kepress.enter="navigate" role="link"
+            >Forgot your password?</span
+          >
+        </router-link>
       </b-row>
     </div>
   </div>
@@ -37,10 +46,10 @@
 <script>
 </script>
 
-<style>
+<style scoped>
 .loginPage {
   background-color: lightgray;
-  height: 90vh;
+  height: 79.4vh;
 }
 .jumbotron {
   position: absolute;
@@ -48,7 +57,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 600px;
-  background-color: white;
   border-style: solid;
   border-color: black;
   background-color: whitesmoke;
@@ -62,27 +70,23 @@ h4 {
 .row {
   align-items: center;
   padding: 2.5px;
+  margin: 0;
 }
 .col-sm-3 label {
   float: right;
 }
-
 #submit {
-  margin-left: 155px;
+  margin-left: 160px;
   padding-top: 20px;
   width: 20%;
 }
-
 #submit button {
   background-color: orange;
   color: black;
 }
-.row #signUpLink {
+.row #securityLink {
   color: black !important;
-  padding-top: 50px;
-}
-.row #signUpLink p {
-  float: right;
-  padding-right: 10px;
+  padding: 40px 60px 20px 0;
+  text-align: right;
 }
 </style>
