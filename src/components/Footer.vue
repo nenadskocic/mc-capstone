@@ -21,6 +21,9 @@
 
 <script></script>
 <style>
+.footerContainer {
+  background-color: #242526;
+}
 .footerContainer div.row {
   margin: 0;
 }
@@ -37,14 +40,14 @@
 }
 #footerNav .nav-item p {
   font-size: 18px;
-  color: black;
+  color: gray;
 }
 .nav-item p:hover {
   color: orange;
 }
 #copyright {
   padding: 0px 0px 20px 0px;
-  color: black;
+  color: gray;
   justify-content: center;
 }
 </style>
