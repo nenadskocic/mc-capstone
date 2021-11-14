@@ -1,53 +1,47 @@
 <template>
-  <div class="footerContainer">
-    <footer>
-      <b-row>
-        <b-navbar id="footerNav">
-          <b-navbar-nav>
-            <b-nav-item :to="{ name: 'contact' }"><p>Contact Us</p></b-nav-item>
-            <b-nav-item>
-              <div><p>|</p></div>
-            </b-nav-item>
-            <b-nav-item :to="{ name: 'about' }"><p>About Us</p></b-nav-item>
-          </b-navbar-nav>
-        </b-navbar>
-      </b-row>
-      <b-row id="copyright"
-        >JSD Transportation Inc. - All Rights Reserved</b-row
-      >
-    </footer>
-  </div>
+  <footer>
+    <b-row>
+      <b-navbar id="footerNav">
+        <b-navbar-nav>
+          <b-nav-item :to="{ name: 'contact' }"><p>Contact Us</p></b-nav-item>
+          <b-nav-item>
+            <div><p>|</p></div>
+          </b-nav-item>
+          <b-nav-item :to="{ name: 'about' }"><p>About Us</p></b-nav-item>
+        </b-navbar-nav>
+      </b-navbar>
+    </b-row>
+    <b-row id="copyright">JSD Transportation Inc. - All Rights Reserved</b-row>
+  </footer>
 </template>
 
 <script></script>
-<style>
-.footerContainer {
+<style scoped>
+footer {
   background-color: #242526;
 }
-.footerContainer div.row {
+footer .row,
+#copyright {
+  margin: 0;
+}
+.footer div.row {
   margin: 0;
 }
 #footerNav {
-  border-top-style: solid;
-  border-color: black;
   padding: 10px 0 0 0;
-  padding: 0;
-  margin: 0;
-}
-#footerNav .nav-item {
-  padding: 0;
   justify-content: center;
+  position: relative;
 }
 #footerNav .nav-item p {
   font-size: 18px;
   color: gray;
 }
-.nav-item p:hover {
+#footerNav .nav-item p:hover {
   color: orange;
 }
 #copyright {
-  padding: 0px 0px 20px 0px;
   color: gray;
   justify-content: center;
+  padding-bottom: 10px;
 }
 </style>
