@@ -29,7 +29,8 @@
 
 <script>
 </script>
-<style>
+
+<style scoped>
 .navbar {
   position: relative;
 }
@@ -37,15 +38,18 @@
   width: 100%;
   align-items: center;
   justify-content: center;
-  height: 100px;
+  height: 74px;
 }
 .navbar-dark .navbar-nav .nav-link {
   color: gray !important;
 }
+.navbar-expand-lg {
+  padding: 0;
+}
 .navbar-brand img {
   padding-left: 10px;
   width: 150px;
-  height: 100px;
+  height: 74px;
 }
 .navbar .nav-item {
   font-size: 24px;
@@ -73,6 +77,7 @@
 }
 #loginBtn {
   background-color: rgb(254, 155, 59);
+  height: 60px;
 }
 h1 {
   font-size: 24px;
