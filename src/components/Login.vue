@@ -1,30 +1,44 @@
 <template>
-  <div class="loginPage">
+  <div id="loginPage">
     <div class="jumbotron text-center">
       <b-row>
         <h4>Sign In</h4>
       </b-row>
-      <b-row>
-        <b-col sm="3">
-          <label>Email:</label>
-        </b-col>
-        <b-col sm="8">
-          <b-input type="email" class="form-control form-control-md" />
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col sm="3">
-          <label>Password:</label>
-        </b-col>
-        <b-col sm="8">
-          <b-input type="password" class="form-control form-control-md" />
-        </b-col>
-      </b-row>
-      <b-row id="submit">
-        <b-button type="submit" class="btn btn-dark btn-lg btn-block">
-          Submit
-        </b-button>
-      </b-row>
+      <b-form>
+        <b-row>
+          <b-col sm="3">
+            <label>Username:</label>
+          </b-col>
+          <b-col sm="8">
+            <b-input
+              type="text"
+              class="form-control form-control-md"
+              v-model="username"
+            />
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col sm="3">
+            <label>Password:</label>
+          </b-col>
+          <b-col sm="8">
+            <b-input
+              type="password"
+              class="form-control form-control-md"
+              v-model="password"
+            />
+          </b-col>
+        </b-row>
+        <b-row id="submit">
+          <b-button
+            type="submit"
+            class="btn btn-dark btn-lg btn-block"
+            @click="login"
+          >
+            Submit
+          </b-button>
+        </b-row>
+      </b-form>
       <b-row>
         <router-link
           to="/securityQuestions"
@@ -44,12 +58,33 @@
 </template>
 
 <script>
+const axios = require("axios");
+
+export default {
+  data: () => ({
+    username: "",
+    password: "",
+  }),
+  methods: {
+    async login() {
+      try {
+        let user = {
+          username: this.username,
+          password: this.password,
+        };
+        await axios.post("http://localhost:3000/login", user);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
-.loginPage {
+#loginPage {
   background-color: lightgray;
-  height: 79.4vh;
+  height: calc(100vh - (74px + 102.67px));
 }
 .jumbotron {
   position: absolute;
@@ -81,7 +116,7 @@ h4 {
   width: 20%;
 }
 #submit button {
-  background-color: orange;
+  background-color: rgb(254, 155, 59);
   color: black;
 }
 .row #securityLink {
