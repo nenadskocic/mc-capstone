@@ -72,7 +72,7 @@
 <style scoped>
 .securityPage {
   background-color: lightgray;
-  height: 79.4vh;
+  height: calc(100vh - (74px + 102.67px));
 }
 .jumbotron {
   position: absolute;
@@ -112,7 +112,7 @@ h4 {
   width: 20%;
 }
 #submit button {
-  background-color: orange;
+  background-color: rgb(254, 155, 59);
   color: black;
 }
 </style>
