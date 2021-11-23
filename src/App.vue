@@ -21,7 +21,7 @@ export default {
   name: "App",
   components: {
     NavBar,
-    Footer
+    Footer,
   },
 };
 </script>
@@ -33,6 +33,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   background-color: lightgray;
-
 }
 </style>

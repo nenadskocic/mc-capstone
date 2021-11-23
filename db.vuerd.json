@@ -1,10 +1,10 @@
 {
   "canvas": {
-    "version": "2.2.6",
+    "version": "2.2.10",
     "width": 5000,
     "height": 5000,
-    "scrollTop": -1255.3359375000005,
-    "scrollLeft": -2670.3359375000023,
+    "scrollTop": -1262.6692708333337,
+    "scrollLeft": -2687.0026041666692,
     "zoomLevel": 0.8,
     "show": {
       "tableComment": true,
@@ -27,6 +27,7 @@
     "bracketType": "none",
     "setting": {
       "relationshipDataTypeSync": true,
+      "relationshipOptimization": false,
       "columnOrder": [
         "columnName",
         "columnDataType",
@@ -259,7 +260,7 @@
           "active": false,
           "left": 3283.614,
           "top": 1391.3082,
-          "zIndex": 5,
+          "zIndex": 3,
           "widthName": 60,
           "widthComment": 60,
           "color": "#F44336"
@@ -434,10 +435,10 @@
           }
         ],
         "ui": {
-          "active": true,
+          "active": false,
           "left": 2763.5862,
           "top": 1261.5006,
-          "zIndex": 19,
+          "zIndex": 5,
           "widthName": 80.76806640625,
           "widthComment": 60,
           "color": "#F44336"
@@ -496,29 +497,6 @@
             "id": "15ca8168-9eb6-4828-8453-a3aa13f4b073"
           },
           {
-            "name": "password",
-            "comment": "",
-            "dataType": "TEXT",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "d117c19c-bdd1-438f-8ea2-9114d3fdd9a8"
-          },
-          {
             "name": "hash_pwd",
             "comment": "",
             "dataType": "TEXT",
@@ -569,7 +547,7 @@
           "active": false,
           "left": 2786.0247,
           "top": 1667.0443,
-          "zIndex": 2,
+          "zIndex": 6,
           "widthName": 60,
           "widthComment": 60,
           "color": "#F44336"
@@ -678,7 +656,7 @@
           "active": false,
           "left": 3276.7544,
           "top": 1769.9911,
-          "zIndex": 6,
+          "zIndex": 4,
           "widthName": 69.20263671875,
           "widthComment": 60,
           "color": "#F44336"
@@ -764,7 +742,7 @@
           "active": false,
           "left": 3293.3358,
           "top": 1134.6691,
-          "zIndex": 4,
+          "zIndex": 2,
           "widthName": 60,
           "widthComment": 60,
           "color": "#F44336"
@@ -827,7 +805,7 @@
           "active": false,
           "left": 3800.6694,
           "top": 1280.5027,
-          "zIndex": 3,
+          "zIndex": 1,
           "widthName": 60,
           "widthComment": 60,
           "color": "#F44336"
@@ -888,7 +866,7 @@
             "f77fe5f9-d894-4e25-a608-914036e6e64b"
           ],
           "x": 3181.29276640625,
-          "y": 1752.7943,
+          "y": 1742.5443,
           "direction": "right"
         },
         "constraintName": "fk_user_to_user_auth",

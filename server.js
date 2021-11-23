@@ -1,11 +1,14 @@
-const sqlite3 = require("sqlite3").verbose();
-const sqlite = require("sqlite");
+const sqlite3 = require('sqlite3').verbose();
+const sqlite = require('sqlite');
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const session = require('express-session');
 const app = express();
+// const DB = require('./db');
+// const db = new DB("jsd.db");
+const router = express.Router();
 
 const admin_username = "nenad.skocic";
 const pass = "Admin123!";
@@ -16,6 +19,8 @@ var corsOptions = {
   credentials: true,
   optionSuccessStatus: 200
 };
+
+app.use(router);
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -78,7 +83,7 @@ app.post('/login', async (req, res) => {
 
       if(validPassword) {
         console.log("Valid credentials.");
-        res.status(200).json(user);
+        res.status(200).send({ auth: true, user: user });
       } else {
         console.log("Invalid credentials!");
         res.status(200).json("Invalid");

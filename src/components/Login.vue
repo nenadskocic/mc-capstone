@@ -72,7 +72,14 @@ export default {
           username: this.username,
           password: this.password,
         };
-        await axios.post("http://localhost:3000/login", user);
+        await axios.post("http://localhost:3000/login", user).then((res) => {
+          if (res.status === 200) {
+            console.log("succeeded");
+            this.$router.push("/admin/userProfiles");
+          } else {
+            console.log("false");
+          }
+        });
       } catch (error) {
         console.log(error);
       }
