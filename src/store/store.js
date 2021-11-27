@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import loginAuth from './modules/loginAuth';
+import userAuthModule from './modules/userAuthModule';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules: {
-        loginAuth,
+        userAuthModule,
     }
 });
