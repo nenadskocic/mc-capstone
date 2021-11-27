@@ -33,48 +33,87 @@
             <b-col sm="1" id="type">
               <b-select type="text" class="form-control form-control-md" />
             </b-col>
-            <b-col sm="1" class="submit">
-              <b-button
-                type="submit"
-                class="btn btn-dark btn-lg btn-block"
-                id="modify"
-                >Modify</b-button
-              >
-            </b-col>
-            <b-col sm="1" class="submit">
-              <b-button
-                type="submit"
-                class="btn btn-dark btn-lg btn-block"
-                id="delete"
-                >Delete</b-button
-              >
-            </b-col>
           </b-row>
         </b-form>
       </div>
     </div>
     <div id="bottom">
       <div class="jumbotron text-center">
-        <b-table :items="items" class="profiles">
-          <thead></thead>
-          <tbody></tbody>
-        </b-table>
+        <table class="profilesTable">
+          <b-thead>
+            <b-tr v-for="header in headers" v-bind:key="header.page">
+              <b-th>{{ header.hID }}</b-th>
+              <b-th>{{ header.hUsername }}</b-th>
+              <b-th>{{ header.hType }}</b-th>
+              <b-th>Edit</b-th>
+              <b-th>Delete</b-th>
+            </b-tr>
+          </b-thead>
+          <b-tbody>
+            <b-tr
+              v-for="(user, index) in filteredUsers"
+              v-bind:key="index.page"
+            >
+              <b-td>{{ user.auth_id }}</b-td>
+              <b-td>{{ user.username }}</b-td>
+              <b-td>{{ user.type }}</b-td>
+              <b-td>
+                <b-button
+                  type="submit"
+                  class="btn btn-dark btn-lg btn-block"
+                  id="edit"
+                  :disabled="isAdmin"
+                  >Edit</b-button
+                >
+              </b-td>
+              <b-td>
+                <b-button
+                  type="submit"
+                  class="btn btn-dark btn-lg btn-block"
+                  id="delete"
+                  :disabled="isAdmin"
+                  >Delete</b-button
+                >
+              </b-td>
+            </b-tr>
+          </b-tbody>
+        </table>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
+
 export default {
   data() {
     return {
-      items: [
-        { user_ID: 1, first_name: "Test", last_name: "Test" },
-        { user_ID: 2, first_name: "Test", last_name: "Test" },
-        { user_ID: 3, first_name: "Test", last_name: "Test" },
-        { user_ID: 4, first_name: "Test", last_name: "Test" },
+      headers: [
+        {
+          hID: "User ID",
+          hUsername: "Username",
+          hEmail: "Email",
+          hType: "Type",
+        },
       ],
+      isAdmin: false,
     };
+  },
+  computed: {
+    ...mapState(["users"]),
+    ...mapGetters(["allUsers"]),
+
+    filteredUsers: function () {
+      return this.allUsers;
+    },
+  },
+  methods: {
+    ...mapMutations([]),
+    ...mapActions(["fetchUsers"]),
+  },
+  created() {
+    this.fetchUsers();
   },
 };
 </script>
@@ -106,7 +145,7 @@ select {
 .col-sm-2 {
   padding: 0;
 }
-.submit button {
+.btn {
   background-color: rgb(254, 155, 59);
   color: black;
 }
@@ -115,6 +154,12 @@ select {
 }
 .jumbotron {
   margin-top: 2%;
-  background-color:darkgray
+  background-color: darkgray;
+}
+.profilesTable {
+  width: 100%;
+}
+table thead {
+  font-size: 24px;
 }
 </style>
