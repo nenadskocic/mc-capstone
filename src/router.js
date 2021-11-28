@@ -1,6 +1,7 @@
 import vue from 'vue'
 import Router from 'vue-router'
 import Login from './components/public/Login.vue'
+import Registration from './components/public/Registration.vue'
 import SecurityQuestions from './components/public/SecurityQuestions.vue'
 import PasswordChange from './components/public/PasswordChange.vue'
 import UserProfiles from './components/admin/UserProfiles.vue'
@@ -16,6 +17,7 @@ export default new Router({
         // Public paths
         { path: '/', name: 'home', component: Login },
         { path: '/public/login', name: 'login', component: Login },
+        { path: '/public/registration', name: 'registration', component: Registration },
         { path: '/public/securityQuestions', name: 'securityQuestions', component: SecurityQuestions },
         { path: '/public/passwordChange', name: 'passwordChange', component: PasswordChange },
         { path: '/public/about', name: 'about', component: About },
