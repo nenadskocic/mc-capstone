@@ -43,7 +43,7 @@ async function startup()
   await db.run("CREATE TABLE role (role_id INTEGER NOT NULL UNIQUE, role_name TEXT NULL, PRIMARY KEY (role_id AUTOINCREMENT));");
   await db.run("CREATE TABLE user_address (address_id INTEGER NOT NULL UNIQUE, street_number INTEGER NOT NULL, street_name TEXT NOT NULL, city TEXT NOT NULL, province TEXT NOT NULL, postal_code TEXT NOT NULL, country TEXT NOT NULL, PRIMARY KEY (address_id AUTOINCREMENT))");
   await db.run("CREATE TABLE user (user_id INTEGER NOT NULL UNIQUE, first_name TEXT NOT NULL, last_name TEXT NOT NULL, user_email TEXT NOT NULL UNIQUE, sin_number INTEGER NOT NULL UNIQUE, license_number TEXT NOT NULL UNIQUE, home_phone INTEGER NOT NULL UNIQUE, cell_phone INTEGER NOT NULL UNIQUE, address_id INTEGER NOT NULL, PRIMARY KEY (user_id AUTOINCREMENT), FOREIGN KEY (address_id) REFERENCES user_address (address_id))");
-  await db.run("CREATE TABLE user_auth (auth_id INTEGER NOT NULL UNIQUE, username TEXT NOT NULL UNIQUE, hash_pwd TEXT NOT NULL, type TEXT NOT NULL, user_id INTEGER NOT NULL, PRIMARY KEY (auth_id AUTOINCREMENT), FOREIGN KEY (user_id) REFERENCES user (user_id))");
+  await db.run("CREATE TABLE user_auth (username TEXT NOT NULL UNIQUE, hash_pwd TEXT NOT NULL, type TEXT NOT NULL)");
   await db.run("CREATE TABLE user_role (user_role_id INTEGER NOT NULL UNIQUE, user_id INTEGER NOT NULL, role_id INTEGER NOT NULL, PRIMARY KEY (user_role_id AUTOINCREMENT), FOREIGN KEY (user_id) REFERENCES user (user_id), FOREIGN KEY (role_id) REFERENCES role (role_id))");
   await db.run("CREATE TABLE user_status (status_id INTEGER NOT NULL UNIQUE, status TEXT NOT NULL, status_description TEXT NOT NULL, user_id INTEGER NOT NULL, PRIMARY KEY (status_id AUTOINCREMENT), FOREIGN KEY (user_id) REFERENCES user (user_id))");
 
@@ -61,7 +61,7 @@ startup();
 async function register_user() {
   try {
     const hash = await bcrypt.hash(pass, saltRounds);
-    await db.run("INSERT INTO user_auth (username, hash_pwd, type, user_id) VALUES ('" + admin_username + "', '" + hash + "', 'admin', 1)");
+    await db.run("INSERT INTO user_auth (username, hash_pwd, type) VALUES ('" + admin_username + "', '" + hash + "', 'admin')");
   } catch(e) {
     console.log(e)
   }
@@ -69,10 +69,26 @@ async function register_user() {
 
 // API
 app.get("/userAuth", async function(req, res) {
-    const data = await db.all("SELECT auth_id as id, * FROM user_auth");
+    const data = await db.all("SELECT rowid as id, * FROM user_auth");
     res.send(data);
 });
 
+app.post("/register", async function(req, res) {
+    const username = req.body.username;
+    const password = bcrypt.hashSync(req.body.password, saltRounds);
+    const type = "general"
+
+    const user = await db.all("SELECT * FROM user_auth WHERE username = '" + username + "'");
+
+    if(user.length > 0) {
+        res.status(200).json("Duplicate");
+    } else {
+        const stmt = await db.prepare("INSERT INTO user_auth VALUES (?,?,?)");
+        stmt.run(username, password, type);
+        stmt.finalize();
+        res.json( { auth: true, user: { username: username, password: password, type: type } });
+    }
+})
 
 app.post('/login', async (req, res) => {
   try {
@@ -90,10 +106,8 @@ app.post('/login', async (req, res) => {
       const validPassword = bcrypt.compareSync(password, pass);
 
       if(validPassword) {
-        console.log("Valid credentials.");
         res.status(200).send({ auth: true, user: user });
       } else {
-        console.log("Invalid credentials!");
         res.status(200).json("Invalid");
       }
     } else {
