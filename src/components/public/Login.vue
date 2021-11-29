@@ -50,19 +50,19 @@
           id="securityLink"
           replace
         >
-          <span @click="navigate" @kepress.enter="navigate" role="link"
+          <span @click="navigate" @keypress="navigate" role="link"
             >Forgot your password?</span
           >
         </router-link>
         <router-link
-          to="/public/securityQuestions"
+          to="/public/registration"
           custom
           v-slot="{ navigate }"
           exact
           :style="{ cursor: 'pointer' }"
           id="registerLink"
         >
-          <span @click="navigate" @kepress.enter="navigate" role="link"
+          <span @click="navigate" @keypress.enter="navigate" role="link"
             >New user? Register here</span
           >
         </router-link>

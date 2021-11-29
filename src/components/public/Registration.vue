@@ -4,7 +4,6 @@
       <b-row>
         <h4>Registration</h4>
       </b-row>
-      <b-row> </b-row>
       <b-form v-model="regValid" @submit.prevent>
         <b-row>
           <b-col sm="3">
@@ -71,7 +70,7 @@
               {{ err }}
             </li>
           </ul>
-        </p>
+      </p>
       <b-row>
         <router-link
           to="/public/login"
@@ -113,6 +112,7 @@ export default {
     async register() {
       try {
         this.error = [];
+        let type = "general";
 
         if (!this.fName) {
           this.error.push("First name required!");
@@ -127,6 +127,7 @@ export default {
           let user = {
             username: this.username,
             password: this.password,
+            type: type,
           };
           await axios
             .post("http://localhost:3000/register", user)
