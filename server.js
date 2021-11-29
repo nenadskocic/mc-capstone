@@ -67,16 +67,41 @@ async function register_user() {
   }
 }
 
-// API
+// API - User Authentication
 app.get("/userAuth", async function(req, res) {
     const data = await db.all("SELECT rowid as id, * FROM user_auth");
     res.send(data);
 });
+// app.get("/userAuth/:id", async function(req, res) {
+//     const rowid = req.params.id;
+//     const stmt = "SELECT * FROM user_auth WHERE rowid=?";
+//     const data = await db.all(stmt, [rowid]);
+//     res.send(data);
+// });
+app.put("/userAuth/:id", async function(req, res)
+{
+  const rowid = req.params.id;
+  const username = req.body.username;
+  const type = req.body.type;
+  const stmt = await db.prepare("UPDATE user_auth SET username=?, type=? WHERE rowid=?");
+  stmt.run(username, type, rowid);
+  stmt.finalize();
+  res.send(stmt);
+});
+app.delete("/userAuth/:id", async function(req, res)
+{
+  const rowid = req.params.id;
+  const stmt = await db.prepare("DELETE FROM user_auth WHERE rowid=?");
+  stmt.run(rowid);
+  stmt.finalize();
+  res.send(stmt);  
+});
 
+// User registration
 app.post("/register", async function(req, res) {
     const username = req.body.username;
     const password = bcrypt.hashSync(req.body.password, saltRounds);
-    const type = "general"
+    const type = "general";
 
     const user = await db.all("SELECT * FROM user_auth WHERE username = '" + username + "'");
 
@@ -90,12 +115,13 @@ app.post("/register", async function(req, res) {
     }
 })
 
+// Login
 app.post('/login', async (req, res) => {
   try {
     const username = req.body.username;
     const password = req.body.password;
 
-    const user = await db.all("SELECT * FROM user_auth WHERE username = '" + username + "'");
+    const user = await db.all("SELECT * FROM user_auth WHERE username='" + username + "'");
 
     if(user) {
       let pass = "";
