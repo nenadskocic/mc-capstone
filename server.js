@@ -6,8 +6,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const session = require('express-session');
 const app = express();
-// const DB = require('./db');
-// const db = new DB("jsd.db");
 const router = express.Router();
 
 const admin_username = "nenad.skocic";
@@ -32,24 +30,28 @@ async function startup()
     filename: 'jsd.db',
     driver: sqlite3.Database
   });
+  db.run('PRAGMA foreign_keys = ON');
 
-  await db.run("DROP TABLE IF EXISTS role"); 
+  //await db.run("DROP TABLE IF EXISTS role"); 
   await db.run("DROP TABLE IF EXISTS user_address");  
   await db.run("DROP TABLE IF EXISTS user");
   await db.run("DROP TABLE IF EXISTS user_auth");
-  await db.run("DROP TABLE IF EXISTS user_role");
-  await db.run("DROP TABLE IF EXISTS user_status"); 
+  //await db.run("DROP TABLE IF EXISTS user_role");
+  //await db.run("DROP TABLE IF EXISTS user_status"); 
 
-  await db.run("CREATE TABLE role (role_id INTEGER NOT NULL UNIQUE, role_name TEXT NULL, PRIMARY KEY (role_id AUTOINCREMENT));");
-  await db.run("CREATE TABLE user_address (address_id INTEGER NOT NULL UNIQUE, street_number INTEGER NOT NULL, street_name TEXT NOT NULL, city TEXT NOT NULL, province TEXT NOT NULL, postal_code TEXT NOT NULL, country TEXT NOT NULL, PRIMARY KEY (address_id AUTOINCREMENT))");
-  await db.run("CREATE TABLE user (user_id INTEGER NOT NULL UNIQUE, first_name TEXT NOT NULL, last_name TEXT NOT NULL, user_email TEXT NOT NULL UNIQUE, sin_number INTEGER NOT NULL UNIQUE, license_number TEXT NOT NULL UNIQUE, home_phone INTEGER NOT NULL UNIQUE, cell_phone INTEGER NOT NULL UNIQUE, address_id INTEGER NOT NULL, PRIMARY KEY (user_id AUTOINCREMENT), FOREIGN KEY (address_id) REFERENCES user_address (address_id))");
-  await db.run("CREATE TABLE user_auth (username TEXT NOT NULL UNIQUE, hash_pwd TEXT NOT NULL, type TEXT NOT NULL)");
-  await db.run("CREATE TABLE user_role (user_role_id INTEGER NOT NULL UNIQUE, user_id INTEGER NOT NULL, role_id INTEGER NOT NULL, PRIMARY KEY (user_role_id AUTOINCREMENT), FOREIGN KEY (user_id) REFERENCES user (user_id), FOREIGN KEY (role_id) REFERENCES role (role_id))");
-  await db.run("CREATE TABLE user_status (status_id INTEGER NOT NULL UNIQUE, status TEXT NOT NULL, status_description TEXT NOT NULL, user_id INTEGER NOT NULL, PRIMARY KEY (status_id AUTOINCREMENT), FOREIGN KEY (user_id) REFERENCES user (user_id))");
+  //await db.run("CREATE TABLE role (role_id INTEGER NOT NULL UNIQUE, role_name TEXT NULL, PRIMARY KEY (role_id AUTOINCREMENT));");
+  await db.run("CREATE TABLE user (user_id INTEGER PRIMARY KEY, first_name TEXT NOT NULL, last_name TEXT NOT NULL, user_email TEXT NOT NULL UNIQUE, sin_number INTEGER NOT NULL UNIQUE, license_number TEXT NOT NULL UNIQUE, home_phone INTEGER NOT NULL UNIQUE, cell_phone INTEGER NOT NULL UNIQUE, status TEXT NOT NULL)");
+  await db.run("CREATE TABLE user_address (address_id INTEGER NOT NULL UNIQUE, street_number INTEGER NOT NULL, street_name TEXT NOT NULL, city TEXT NOT NULL, province TEXT NOT NULL, postal_code TEXT NOT NULL, country TEXT NOT NULL, user_id INTEGER NOT NULL, PRIMARY KEY (address_id AUTOINCREMENT), FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE)");
+  await db.run("CREATE TABLE user_auth (auth_id INTEGER PRIMARY KEY, username TEXT NOT NULL UNIQUE, hash_pwd TEXT NOT NULL, type TEXT NOT NULL)");
+  //await db.run("CREATE TABLE user_role (user_role_id INTEGER NOT NULL UNIQUE, user_id INTEGER NOT NULL, role_id INTEGER NOT NULL, PRIMARY KEY (user_role_id AUTOINCREMENT), FOREIGN KEY (user_id) REFERENCES user (user_id), FOREIGN KEY (role_id) REFERENCES role (role_id))");
+  //await db.run("CREATE TABLE user_status (status_id INTEGER NOT NULL UNIQUE, status TEXT NOT NULL, status_description TEXT NOT NULL, user_id INTEGER NOT NULL, PRIMARY KEY (status_id AUTOINCREMENT), FOREIGN KEY (user_id) REFERENCES user (user_id))");
 
-  await db.run("INSERT INTO user (first_name, last_name, user_email, sin_number, license_number, home_phone, cell_phone, address_id) VALUES ('nenad', 'skocic', 'nenad@jsdtransportation.ca', 111111, 'S4913-47535-73581', 9055782526, 3654764643, 1)");
-  await db.run("INSERT INTO user_address (street_number, street_name, city, province, postal_code, country) VALUES (78, 'Sunrise Dr', 'Hamilton', 'ON', 'L8K 4C3', 'Canada')");
+
+  await db.run("INSERT INTO user (user_id, first_name, last_name, user_email, sin_number, license_number, home_phone, cell_phone, status) VALUES (null, 'Nenad', 'Skocic', 'nenad@jsdtransportation.ca', 111111, 'S4913-47535-73581', 9055782526, 3654764643, 'Active')");
+  await db.run("INSERT INTO user_address (street_number, street_name, city, province, postal_code, country, user_id) VALUES (78, 'Sunrise Dr', 'Hamilton', 'ON', 'L8K 4C3', 'Canada', 1)");
  
+  await db.run("INSERT INTO user (user_id, first_name, last_name, user_email, sin_number, license_number, home_phone, cell_phone, status) VALUES (null, 'T', 'T', 'T@jsdtransportation.ca', 343434, 'S4913-47535-73781', 9055784526, 3658764643, 'Active')");
+  await db.run("INSERT INTO user_address (street_number, street_name, city, province, postal_code, country, user_id) VALUES (78, 'Sunrise Dr', 'Hamilton', 'ON', 'L8K 4C3', 'Canada', 2)");
   register_user();
 
   const server = app.listen(3000, function(){
@@ -61,40 +63,78 @@ startup();
 async function register_user() {
   try {
     const hash = await bcrypt.hash(pass, saltRounds);
-    await db.run("INSERT INTO user_auth (username, hash_pwd, type) VALUES ('" + admin_username + "', '" + hash + "', 'admin')");
+    await db.run("INSERT INTO user_auth (auth_id, username, hash_pwd, type) VALUES (?, '" + admin_username + "', '" + hash + "', 'admin')");
   } catch(e) {
     console.log(e)
   }
 }
 
 // API - User Authentication
-app.get("/userAuth", async function(req, res) {
-    const data = await db.all("SELECT rowid as id, * FROM user_auth");
+app.get("/auth", async function(req, res) {
+    const data = await db.all("SELECT auth_id as id, * FROM user_auth");
     res.send(data);
 });
-// app.get("/userAuth/:id", async function(req, res) {
-//     const rowid = req.params.id;
-//     const stmt = "SELECT * FROM user_auth WHERE rowid=?";
-//     const data = await db.all(stmt, [rowid]);
-//     res.send(data);
-// });
-app.put("/userAuth/:id", async function(req, res)
+app.get("/userAuth/:id", async function(req, res) {
+    const auth_id = req.params.id;
+    const stmt = "SELECT * FROM user_auth WHERE auth_id=?";
+    const data = await db.all(stmt, [auth_id]);
+    res.send(data);
+});
+app.put("/auth/:id", async function(req, res)
 {
-  const rowid = req.params.id;
+  const auth_id = req.params.id;
   const username = req.body.username;
   const type = req.body.type;
-  const stmt = await db.prepare("UPDATE user_auth SET username=?, type=? WHERE rowid=?");
-  stmt.run(username, type, rowid);
+  const stmt = await db.prepare("UPDATE user_auth SET username=?, type=? WHERE auth_id=?");
+  stmt.run(username, type, auth_id);
   stmt.finalize();
   res.send(stmt);
 });
-app.delete("/userAuth/:id", async function(req, res)
+app.delete("/auth/:id", async function(req, res)
 {
-  const rowid = req.params.id;
-  const stmt = await db.prepare("DELETE FROM user_auth WHERE rowid=?");
-  stmt.run(rowid);
+  const auth_id = req.params.id;
+  const stmt = await db.prepare("DELETE FROM user_auth WHERE auth_id=?");
+  stmt.run(auth_id);
   stmt.finalize();
   res.send(stmt);  
+});
+
+// API - Driver_Info (JOIN)
+app.get("/driver", async function(req, res) {
+  const data = await db.all("SELECT * FROM user INNER JOIN user_address ON user.user_id = user_address.user_id");
+  res.send(data);
+});
+app.get("/driver/:id", async function(req, res)
+{
+  const user_id = req.params.id;
+  const stmt = "SELECT * FROM user INNER JOIN user_address ON user.user_id = user_address.user_id WHERE user.user_id=?";
+  const data = await db.all(stmt, [user_id]);
+  res.send(data);
+});
+app.delete("/driver/:id", async function(req, res)
+{
+  const user_id = req.params.id;
+  const stmt = await db.prepare("DELETE FROM user WHERE user_id=?");
+  stmt.run(user_id);
+  stmt.finalize();
+  res.send(stmt);  
+});
+app.put("/driver/:id", async function(req, res)
+{
+  const user_id = req.params.id;
+  const first_name = req.body.first_name;
+  const last_name = req.body.last_name;
+  const user_email = req.body.user_email;
+  const sin_number = req.body.sin_number;
+  const license_number = req.body.license_number;
+  const home_phone = req.body.home_phone;
+  const cell_phone = req.body.cell_phone;
+  const status = req.body.status;
+  console.log(first_name);
+  const stmt = await db.prepare("UPDATE user SET first_name=?, last_name=?, user_email=?, sin_number=?, license_number=?, home_phone=?, cell_phone=?, status=? WHERE user_id=?");
+  stmt.run(first_name, last_name, user_email, sin_number, license_number, home_phone, cell_phone, status, user_id);
+  stmt.finalize();
+  res.send(stmt);
 });
 
 // User registration
@@ -108,8 +148,8 @@ app.post("/register", async function(req, res) {
     if(user.length > 0) {
         res.status(200).json("Duplicate");
     } else {
-        const stmt = await db.prepare("INSERT INTO user_auth VALUES (?,?,?)");
-        stmt.run(username, password, type);
+        const stmt = await db.prepare("INSERT INTO user_auth VALUES (?,?,?,?)");
+        stmt.run(null, username, password, type);
         stmt.finalize();
         res.json( { auth: true, user: { username: username, password: password, type: type } });
     }
