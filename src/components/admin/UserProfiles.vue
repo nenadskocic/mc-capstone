@@ -31,7 +31,6 @@
             </b-col>
             <b-col sm="6">
               <b-button
-                v-b-modal.user-modal
                 class="btn btn-dark btn-lg btn-block"
                 id="createBtn"
                 @click="showModal"
@@ -297,7 +296,7 @@ export default {
               } else {
                 this.userValid = true;
                 this.modalVis = false;
-                window.location = "/admin/userProfiles";
+                window.location = "/admin//profiles/user";
               }
             });
         }
@@ -314,7 +313,7 @@ export default {
       } else {
         for (var i = 0; i < this.allUsers.length; i++) {
           if (editedUser.username !== this.allUsers[i].username) {
-            window.location = "/admin/userProfiles";
+            window.location = "/admin/profiles/user";
             return this.updateUser(editedUser);
           } else {
             return (this.editUsernameErr = "Username in use.");
@@ -368,7 +367,7 @@ select {
   height: 85%;
 }
 .jumbotron {
-  margin-top: 2%;
+  margin-top: 30px;
   background-color: darkgray;
 }
 .profilesTable {
