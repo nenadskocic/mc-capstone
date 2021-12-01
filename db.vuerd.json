@@ -3,8 +3,8 @@
     "version": "2.2.10",
     "width": 5000,
     "height": 5000,
-    "scrollTop": -1262.0026041666667,
-    "scrollLeft": -2691.669270833335,
+    "scrollTop": -1442.0026041666677,
+    "scrollLeft": -2651.669270833341,
     "zoomLevel": 0.8,
     "show": {
       "tableComment": true,
@@ -258,9 +258,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 3283.614,
-          "top": 1391.3082,
-          "zIndex": 25,
+          "left": 3294.4475,
+          "top": 1320.475,
+          "zIndex": 151,
           "widthName": 60,
           "widthComment": 60,
           "color": "#F44336"
@@ -458,10 +458,10 @@
           }
         ],
         "ui": {
-          "active": true,
+          "active": false,
           "left": 2766.0866,
           "top": 1270.667,
-          "zIndex": 30,
+          "zIndex": 6,
           "widthName": 80.76806640625,
           "widthComment": 60,
           "color": "#F44336"
@@ -568,9 +568,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 2798.5246,
-          "top": 1661.211,
-          "zIndex": 29,
+          "left": 2808.5249,
+          "top": 1631.2116,
+          "zIndex": 156,
           "widthName": 60,
           "widthComment": 60,
           "color": "#F44336"
@@ -579,11 +579,11 @@
         "id": "53c8e310-c291-4e01-a6e6-44c2ba5c575d"
       },
       {
-        "name": "user_status",
+        "name": "truck",
         "comment": "",
         "columns": [
           {
-            "name": "status_id",
+            "name": "truck_id",
             "comment": "",
             "dataType": "INTEGER",
             "default": "",
@@ -603,17 +603,17 @@
               "widthDataType": 60,
               "widthDefault": 60
             },
-            "id": "d9c91957-a85a-423e-87f6-95a13f99b260"
+            "id": "77a54b96-f8c1-45a3-bc93-91c922010796"
           },
           {
-            "name": "status",
+            "name": "truck_no",
             "comment": "",
-            "dataType": "TEXT",
+            "dataType": "INTEGER",
             "default": "",
             "option": {
               "autoIncrement": false,
               "primaryKey": false,
-              "unique": false,
+              "unique": true,
               "notNull": true
             },
             "ui": {
@@ -626,10 +626,10 @@
               "widthDataType": 60,
               "widthDefault": 60
             },
-            "id": "2a944713-bc5f-4558-895b-952f10c5d21b"
+            "id": "5408cd79-1f0c-40df-9190-56f22dae1f36"
           },
           {
-            "name": "status_description",
+            "name": "truck_make",
             "comment": "",
             "dataType": "TEXT",
             "default": "",
@@ -644,166 +644,132 @@
               "pk": false,
               "fk": false,
               "pfk": false,
-              "widthName": 106.78076171875,
+              "widthName": 69.18994140625,
               "widthComment": 60,
               "widthDataType": 60,
               "widthDefault": 60
             },
-            "id": "71fee194-22f9-4d8d-b2ca-f04c06f0f9c6"
+            "id": "d0e41fe5-9f08-4d64-8da8-347f6def7c61"
+          },
+          {
+            "name": "truck_model",
+            "comment": "",
+            "dataType": "TEXT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 72.80810546875,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "a9ab784c-7b5b-4683-b55a-073e0a607d12"
+          },
+          {
+            "name": "truck_year",
+            "comment": "",
+            "dataType": "INTEGER",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 62.68994140625,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "09e9a9cd-76f8-4dd9-a31b-085af77de340"
+          },
+          {
+            "name": "truck_plate_no",
+            "comment": "",
+            "dataType": "TEXT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": true,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 87.28076171875,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "8c23ce60-60bd-4223-85b9-d16788fc3b0e"
+          },
+          {
+            "name": "truck_type",
+            "comment": "",
+            "dataType": "TEXT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 61.97265625,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "aeae6ca1-6fd4-4147-ab06-c3e62bb8130b"
+          },
+          {
+            "name": "truck_status",
+            "comment": "",
+            "dataType": "TEXT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 72.08447265625,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "b594ec88-a9b3-40f6-afeb-2170dad18e85"
           },
           {
             "name": "user_id",
             "comment": "",
             "dataType": "INTEGER",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": true,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "c0d3977c-b269-4502-99ec-88740472b6e6"
-          }
-        ],
-        "ui": {
-          "active": false,
-          "left": 3276.7544,
-          "top": 1769.9911,
-          "zIndex": 4,
-          "widthName": 69.20263671875,
-          "widthComment": 60,
-          "color": "#F44336"
-        },
-        "visible": true,
-        "id": "854cac89-483b-415b-bd4c-df8004755709"
-      },
-      {
-        "name": "user_role",
-        "comment": "",
-        "columns": [
-          {
-            "name": "user_role_id",
-            "comment": "",
-            "dataType": "INTEGER",
-            "default": "",
-            "option": {
-              "autoIncrement": true,
-              "primaryKey": true,
-              "unique": true,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": true,
-              "fk": false,
-              "pfk": false,
-              "widthName": 73.54443359375,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "7d429351-3175-4185-9b64-847baffa1eff"
-          },
-          {
-            "name": "user_id",
-            "comment": "",
-            "dataType": "INTEGER",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": true,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "d0b1b388-2d3e-4a96-83fb-e1135f75da99"
-          },
-          {
-            "name": "role_id",
-            "comment": "",
-            "dataType": "INTEGER",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": true,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "582348b9-5c4b-4c08-8056-d8af2708855f"
-          }
-        ],
-        "ui": {
-          "active": false,
-          "left": 3293.3358,
-          "top": 1134.6691,
-          "zIndex": 2,
-          "widthName": 60,
-          "widthComment": 60,
-          "color": "#F44336"
-        },
-        "visible": true,
-        "id": "7c265768-f7c0-41fc-b777-39bcf957800b"
-      },
-      {
-        "name": "role",
-        "comment": "",
-        "columns": [
-          {
-            "name": "role_id",
-            "comment": "",
-            "dataType": "INTEGER",
-            "default": "",
-            "option": {
-              "autoIncrement": true,
-              "primaryKey": true,
-              "unique": true,
-              "notNull": true
-            },
-            "ui": {
-              "active": false,
-              "pk": true,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            },
-            "id": "9258b0d2-b885-40fa-b263-9bec6f1e053a"
-          },
-          {
-            "name": "role_name",
-            "comment": "",
-            "dataType": "TEXT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -814,27 +780,274 @@
             "ui": {
               "active": false,
               "pk": false,
-              "fk": false,
+              "fk": true,
               "pfk": false,
-              "widthName": 63.42626953125,
+              "widthName": 60,
               "widthComment": 60,
               "widthDataType": 60,
               "widthDefault": 60
             },
-            "id": "78ccf451-fd52-48d5-b044-f264cf2de5f0"
+            "id": "d7854db1-6d2b-4851-9ba7-e0106e646218"
           }
         ],
         "ui": {
           "active": false,
-          "left": 3800.6694,
-          "top": 1280.5027,
-          "zIndex": 1,
+          "left": 3297.6689,
+          "top": 1700.3368,
+          "zIndex": 317,
           "widthName": 60,
           "widthComment": 60,
-          "color": "#F44336"
+          "color": "#005EFF"
         },
         "visible": true,
-        "id": "56422fd4-6ba7-44c1-8884-2dda6255f12a"
+        "id": "b5d64a6c-3137-4f77-8d2a-27a63edec3da"
+      },
+      {
+        "name": "trailer",
+        "comment": "",
+        "columns": [
+          {
+            "name": "trailer_id",
+            "comment": "",
+            "dataType": "INTEGER",
+            "default": "",
+            "option": {
+              "autoIncrement": true,
+              "primaryKey": true,
+              "unique": true,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "d2c0ff8b-0d7a-4f0b-8302-3d78c9e9dccf"
+          },
+          {
+            "name": "trailer_no",
+            "comment": "",
+            "dataType": "INTEGER",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": true,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "575e7f7a-2099-452e-875b-9181a65449f3"
+          },
+          {
+            "name": "trailer_make",
+            "comment": "",
+            "dataType": "TEXT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 73.525390625,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "0e64125b-67c1-46e4-a45a-d11fe3684aca"
+          },
+          {
+            "name": "trailer_year",
+            "comment": "",
+            "dataType": "TEXT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 67.025390625,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "916d55bc-46e6-49c2-b221-fe846f49d450"
+          },
+          {
+            "name": "trailer_type",
+            "comment": "",
+            "dataType": "TEXT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 66.30810546875,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "4f281856-3ee7-4fab-8122-9d98f5857ed2"
+          },
+          {
+            "name": "trailer_plate_no",
+            "comment": "",
+            "dataType": "TEXT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": true,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 91.6162109375,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "8cd5109e-e9d0-495e-bfda-22a8a36d5cf4"
+          },
+          {
+            "name": "trailer_length",
+            "comment": "",
+            "dataType": "INTEGER",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 77.15625,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "0dc7a638-47dc-407b-b8c1-9c5cbb474c0b"
+          },
+          {
+            "name": "trailer_volume",
+            "comment": "",
+            "dataType": "INTEGER",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 83.6435546875,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "42c8cc03-4cd6-4b11-925d-ebb45c170ed6"
+          },
+          {
+            "name": "trailer_status",
+            "comment": "",
+            "dataType": "TEXT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 76.419921875,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "16dd56df-f3d2-4d10-9fed-97cca335c12e"
+          },
+          {
+            "name": "truck_id",
+            "comment": "",
+            "dataType": "INTEGER",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "d72f4629-98e2-43bc-807f-3126a0eeb923"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 3295.5212,
+          "top": 2054.447,
+          "zIndex": 319,
+          "widthName": 60,
+          "widthComment": 60,
+          "color": "#009688"
+        },
+        "visible": true,
+        "id": "2da56de0-1271-4c3d-8bad-e482658ac0d3"
       }
     ],
     "indexes": []
@@ -846,84 +1059,6 @@
     "relationships": [
       {
         "identification": false,
-        "relationshipType": "OneN",
-        "startRelationshipType": "Dash",
-        "start": {
-          "tableId": "9781a339-8553-4101-a75e-e6f39d7a4fa6",
-          "columnIds": [
-            "7cf4732d-baf6-4d87-8c84-21c3e4d1edc4"
-          ],
-          "x": 3497.50120703125,
-          "y": 1391.3082,
-          "direction": "top"
-        },
-        "end": {
-          "tableId": "7c265768-f7c0-41fc-b777-39bcf957800b",
-          "columnIds": [
-            "d0b1b388-2d3e-4a96-83fb-e1135f75da99"
-          ],
-          "x": 3497.108016796875,
-          "y": 1265.1691,
-          "direction": "bottom"
-        },
-        "constraintName": "fk_user_to_user_role",
-        "visible": true,
-        "id": "d4d1c4e7-4a92-421f-a6be-766e78658fae"
-      },
-      {
-        "identification": false,
-        "relationshipType": "OneN",
-        "startRelationshipType": "Dash",
-        "start": {
-          "tableId": "56422fd4-6ba7-44c1-8884-2dda6255f12a",
-          "columnIds": [
-            "9258b0d2-b885-40fa-b263-9bec6f1e053a"
-          ],
-          "x": 3800.6694,
-          "y": 1335.5027,
-          "direction": "left"
-        },
-        "end": {
-          "tableId": "7c265768-f7c0-41fc-b777-39bcf957800b",
-          "columnIds": [
-            "582348b9-5c4b-4c08-8056-d8af2708855f"
-          ],
-          "x": 3700.88023359375,
-          "y": 1199.9191,
-          "direction": "right"
-        },
-        "constraintName": "fk_role_to_user_role",
-        "visible": true,
-        "id": "1c33e72e-15c4-4763-8ed0-c7febe1077a0"
-      },
-      {
-        "identification": false,
-        "relationshipType": "OneN",
-        "startRelationshipType": "Dash",
-        "start": {
-          "tableId": "9781a339-8553-4101-a75e-e6f39d7a4fa6",
-          "columnIds": [
-            "7cf4732d-baf6-4d87-8c84-21c3e4d1edc4"
-          ],
-          "x": 3497.50120703125,
-          "y": 1644.8082,
-          "direction": "bottom"
-        },
-        "end": {
-          "tableId": "854cac89-483b-415b-bd4c-df8004755709",
-          "columnIds": [
-            "c0d3977c-b269-4502-99ec-88740472b6e6"
-          ],
-          "x": 3497.144780859375,
-          "y": 1769.9911,
-          "direction": "top"
-        },
-        "constraintName": "fk_user_to_user_status",
-        "visible": true,
-        "id": "618b927c-7c39-41d5-b133-57a90c006393"
-      },
-      {
-        "identification": false,
         "relationshipType": "OneOnly",
         "startRelationshipType": "Dash",
         "start": {
@@ -931,8 +1066,8 @@
           "columnIds": [
             "7cf4732d-baf6-4d87-8c84-21c3e4d1edc4"
           ],
-          "x": 3283.614,
-          "y": 1518.0582,
+          "x": 3294.4475,
+          "y": 1447.225,
           "direction": "left"
         },
         "end": {
@@ -947,6 +1082,58 @@
         "constraintName": "fk_user_to_user_address",
         "visible": true,
         "id": "538dd4ab-3abc-46b7-acaa-166ef6d5edda"
+      },
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Ring",
+        "start": {
+          "tableId": "9781a339-8553-4101-a75e-e6f39d7a4fa6",
+          "columnIds": [
+            "7cf4732d-baf6-4d87-8c84-21c3e4d1edc4"
+          ],
+          "x": 3508.33470703125,
+          "y": 1573.975,
+          "direction": "bottom"
+        },
+        "end": {
+          "tableId": "b5d64a6c-3137-4f77-8d2a-27a63edec3da",
+          "columnIds": [
+            "d7854db1-6d2b-4851-9ba7-e0106e646218"
+          ],
+          "x": 3508.309280859375,
+          "y": 1700.3368,
+          "direction": "top"
+        },
+        "constraintName": "fk_user_to_truck",
+        "visible": true,
+        "id": "4e115a4c-0449-4ff5-ba27-180027aea98e"
+      },
+      {
+        "identification": false,
+        "relationshipType": "OneOnly",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "b5d64a6c-3137-4f77-8d2a-27a63edec3da",
+          "columnIds": [
+            "77a54b96-f8c1-45a3-bc93-91c922010796"
+          ],
+          "x": 3508.309280859375,
+          "y": 1953.8368,
+          "direction": "bottom"
+        },
+        "end": {
+          "tableId": "2da56de0-1271-4c3d-8bad-e482658ac0d3",
+          "columnIds": [
+            "d72f4629-98e2-43bc-807f-3126a0eeb923"
+          ],
+          "x": 3508.32930546875,
+          "y": 2054.447,
+          "direction": "top"
+        },
+        "constraintName": "fk_truck_to_trailer",
+        "visible": true,
+        "id": "d5d86621-48ee-4277-ae30-b944d8d6aa15"
       }
     ]
   }
