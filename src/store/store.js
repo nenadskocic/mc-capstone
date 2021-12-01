@@ -1,11 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import userAuthModule from './modules/userAuthModule';
+import auth from './modules/auth';
+import driver from './modules/driver';
+import truck from './modules/truck';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules: {
-        userAuthModule,
+        auth,
+        driver,
+        truck,
     }
 });
