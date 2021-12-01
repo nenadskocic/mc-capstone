@@ -93,7 +93,7 @@ export default {
             this.error = "Invalid credentials!";
           } else {
             this.loginValid = true;
-            this.$router.replace("/admin/userProfiles");
+            this.$router.replace("/admin/profiles/user");
           }
         });
       } catch (error) {
