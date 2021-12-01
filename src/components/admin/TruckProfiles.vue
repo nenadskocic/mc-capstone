@@ -1,18 +1,18 @@
 <template>
   <div id="truckProfPage">
     <div id="top">
-      <h1>Driver Profiles</h1>
+      <h1>Truck Profiles</h1>
       <div id="innerTop">
         <b-form>
           <b-row>
             <b-col sm="2">
-              <label>Driver First Name:</label>
+              <label>Truck Number:</label>
             </b-col>
             <b-col sm="2">
               <b-input
-                type="text"
+                type="number"
                 class="form-control form-control-md"
-                v-model="searchName"
+                v-model="searchTruck"
               />
             </b-col>
             <b-col sm="2">
@@ -24,13 +24,12 @@
                 class="form-control form-control-md"
                 v-model="selectStatus"
               >
-                <option></option>
                 <option value="Active">Active</option>
-                <option value="Terminated">Terminated</option>
+                <option value="Flatbed">Inactive</option>
               </b-select>
             </b-col>
             <b-col sm="4">
-              <b-button class="btn btn-dark btn-lg btn-block" id="createBtn"
+              <b-button class="btn btn-dark btn-lg btn-block" id="createBtn" @click="showModal"
                 >Create</b-button
               >
             </b-col>
@@ -43,67 +42,132 @@
         <table class="profilesTable">
           <b-thead>
             <b-tr v-for="header in headers" v-bind:key="header.page">
-              <b-th>{{ header.hID }}</b-th>
-              <b-th>{{ header.hFName }}</b-th>
-              <b-th>{{ header.hLName }}</b-th>
-              <b-th>{{ header.hEmail }}</b-th>
-              <b-th>{{ header.hHomeNumb }}</b-th>
-              <b-th>{{ header.hCellNumb }}</b-th>
-              <b-th>{{ header.hStatus }}</b-th>
-              <b-th>Details</b-th>
+              <b-th>{{ header.h1 }}</b-th>
+              <b-th>{{ header.h2 }}</b-th>
+              <b-th>{{ header.h3 }}</b-th>
+              <b-th>{{ header.h4 }}</b-th>
+              <b-th>{{ header.h5 }}</b-th>
+              <b-th>{{ header.h6 }}</b-th>
+              <b-th>{{ header.h7 }}</b-th>
+              <b-th>{{ header.h8 }}</b-th>
+              <b-th>Edit</b-th>
               <b-th>Delete</b-th>
             </b-tr>
           </b-thead>
           <b-tbody>
             <b-tr
-              v-for="(driver, index) in filteredDrivers"
+              v-for="(truck, index) in filteredTruck"
               v-bind:key="index.page"
-            >
-              <b-td>{{ driver.user_id }}</b-td>
+              :class="{ editing: truck == editedTruck }" v-cloak> 
+              <b-td>{{ truck.truck_id }}</b-td>
               <b-td>
-                <div>
-                  {{ driver.first_name }}
+                <div class="view">
+                  {{ truck.truck_no }}
+                </div>
+                <div class="edit">
+                    <input type="number" v-model="truck.truck_no" disabled />
+                    <div>
+                      <p id="editErr">{{ e_t_no_err }}</p>
+                    </div>
+                </div>  
+              </b-td>
+              <b-td>
+                <div class="view">
+                  {{ truck.truck_make }}
+                </div>
+                <div class="edit">
+                    <input type="text" v-model="truck.truck_make" />
+                    <div>
+                      <p id="editErr">{{e_t_make_err }}</p>
+                    </div>
                 </div>
               </b-td>
               <b-td>
-                <div>
-                  {{ driver.last_name }}
+                <div class="view">
+                  {{ truck.truck_model }}
+                </div>
+                <div class="edit">
+                    <input type="text" v-model="truck.truck_model" />
+                    <div>
+                      <p id="editErr">{{ e_t_model_err }}</p>
+                    </div>
                 </div>
               </b-td>
               <b-td>
-                <div>
-                  {{ driver.user_email }}
+                <div class="view">
+                  {{ truck.truck_year }}
+                </div>
+                <div class="edit">
+                    <input type="text" v-model="truck.truck_year" />
+                    <div>
+                      <p id="editErr">{{ e_t_year_err }}</p>
+                    </div>
                 </div>
               </b-td>
               <b-td>
-                <div>
-                  {{ driver.home_phone }}
+                <div class="view">
+                  {{ truck.truck_plate_no }}
+                </div>
+                <div class="edit">
+                    <input type="text" v-model="truck.truck_plate_no" disabled />
+                    <div>
+                      <p id="editErr">{{ e_t_plate_no_err }}</p>
+                    </div>
                 </div>
               </b-td>
               <b-td>
-                <div>
-                  {{ driver.cell_phone }}
+                <div class="view">
+                  {{ truck.truck_type }}
+                </div>
+                <div class="edit">
+                    <b-select
+                      type="text"
+                      class="form-control form-control-md"
+                      v-model="truck.truck_type"
+                    >
+                        <option value="Box">Box</option>
+                        <option value="Flatbed">Flatbed</option>
+                        <option value="Semi-trailer">Semi-trailer</option>
+                    </b-select>
+                </div>
+                
+              </b-td>
+               <b-td>
+                <div class="view">
+                  {{ truck.truck_status }}
+                </div>
+                <div class="edit">
+                    <b-select
+                      type="text"
+                      class="form-control form-control-md"
+                      v-model="truck.truck_status"
+                    >
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </b-select>
                 </div>
               </b-td>
-              <b-td>
-                <div>
-                  {{ driver.status }}
-                </div>
-              </b-td>
-
               <b-td class="view">
                 <b-button
                   class="btn btn-dark btn-lg btn-block"
-                  id="details"
-                  @click="detailsDriver(driver)"
-                  >Details</b-button
+                  id="editBtn"
+                  @click="editTruck(truck)"
+                  >Edit</b-button
                 >
               </b-td>
+            <b-td class="edit">
+                  <b-button
+                    class="btn btn-dark btn-lg btn-block"
+                    id="saveEditedTruckBtn"
+                    @click="saveEditedTruck(editedTruck)"
+                    >Save</b-button
+                  >
+                </b-td>
               <b-td>
                 <b-button
                   class="btn btn-dark btn-lg btn-block"
-                  id="delete"
-                  @click="delDriver(driver)"
+                  id="deleteBtn"
+                  @click="delTruck(truck)"
                   >Delete</b-button
                 >
               </b-td>
@@ -111,200 +175,130 @@
           </b-tbody>
         </table>
       </div>
-      <div v-if="detailsFlag">
-        <div id="left">
-          <b-form-fieldset>
-            <table>
-              <b-row>
-                <b-col sm="4">
-                  <label>First Name:</label>
-                </b-col>
-                <b-col sm="7">
-                  <b-input
-                    type="text"
-                    class="form-control form-control-md"
-                    v-model="first_name"
-                  />
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col sm="4">
-                  <label>Last Name:</label>
-                </b-col>
-                <b-col sm="7">
-                  <b-input
-                    type="text"
-                    class="form-control form-control-md"
-                    v-model="last_name"
-                  />
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col sm="4">
-                  <label>Email:</label>
-                </b-col>
-                <b-col sm="7">
-                  <b-input
-                    type="email"
-                    class="form-control form-control-md"
-                    v-model="user_email"
-                  />
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col sm="4">
-                  <label>Home No:</label>
-                </b-col>
-                <b-col sm="7">
-                  <b-input
-                    type="text"
-                    class="form-control form-control-md"
-                    v-model="home_phone"
-                  />
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col sm="4">
-                  <label>Cell No:</label>
-                </b-col>
-                <b-col sm="7">
-                  <b-input
-                    type="text"
-                    class="form-control form-control-md"
-                    v-model="cell_phone"
-                  />
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col sm="4">
-                  <label>SIN No:</label>
-                </b-col>
-                <b-col sm="7">
-                  <b-input
-                    type="text"
-                    class="form-control form-control-md"
-                    v-model="sin_number"
-                  />
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col sm="4">
-                  <label>License No:</label>
-                </b-col>
-                <b-col sm="7">
-                  <b-input
-                    type="text"
-                    class="form-control form-control-md"
-                    v-model="license_number"
-                  />
-                </b-col>
-              </b-row>
-              <b-row>
-                <b-col sm="4">
-                  <label>Status:</label>
-                </b-col>
-                <b-col sm="7">
-                  <b-input
-                    type="text"
-                    class="form-control form-control-md"
-                    v-model="status"
-                  />
-                </b-col>
-              </b-row>
-            </table>
-          </b-form-fieldset>
-        </div>
-        <div id="right">
-          <b-form-fieldset>
-            <table>
-              <b-row>
+    </div>
+    <div id="modal" v-if="modalVis">
+        <b-row>
+            <h4>Add Truck</h4>
+        </b-row>
+        <b-form id="truckForm" v-model="truckValid" @submit.prevent>
+            <b-row>
                 <b-col sm="3">
-                  <label>Street No:</label>
+                    <label>Truck No:</label>
                 </b-col>
                 <b-col sm="7">
-                  <b-input
+                    <b-input
+                    type="number"
+                    class="form-control form-control-md"
+                    v-model="truck_no"
+                    />
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col sm="3">
+                    <label>Make:</label>
+                </b-col>
+                <b-col sm="7">
+                    <b-input
                     type="text"
                     class="form-control form-control-md"
-                    v-model="street_number"
-                  />
+                    v-model="truck_make"
+                    />
                 </b-col>
-              </b-row>
-              <b-row>
+            </b-row>
+            <b-row>
                 <b-col sm="3">
-                  <label>Street Name:</label>
+                    <label>Model:</label>
                 </b-col>
                 <b-col sm="7">
-                  <b-input
+                    <b-input
                     type="text"
                     class="form-control form-control-md"
-                    v-model="street_name"
-                  />
+                    v-model="truck_model"            
+                    />
                 </b-col>
-              </b-row>
-              <b-row>
+            </b-row>
+            <b-row>
                 <b-col sm="3">
-                  <label>City:</label>
+                    <label>Year:</label>
                 </b-col>
                 <b-col sm="7">
-                  <b-input
-                    type="email"
+                    <b-input
+                    type="number"
                     class="form-control form-control-md"
-                    v-model="city"
-                  />
+                    v-model="truck_year"             
+                    />
                 </b-col>
-              </b-row>
-              <b-row>
+            </b-row>
+                        <b-row>
                 <b-col sm="3">
-                  <label>Province:</label>
+                    <label>Plate No:</label>
                 </b-col>
                 <b-col sm="7">
-                  <b-input
+                    <b-input
                     type="text"
                     class="form-control form-control-md"
-                    v-model="province"
-                  />
+                    v-model="truck_plate_no"            
+                    />
                 </b-col>
-              </b-row>
-              <b-row>
+            </b-row>
+            <b-row>
                 <b-col sm="3">
-                  <label>Postal Code:</label>
+                    <label>Type:</label>
                 </b-col>
                 <b-col sm="7">
-                  <b-input
-                    type="text"
-                    class="form-control form-control-md"
-                    v-model="postal_code"
-                  />
+                    <b-select
+                        type="text"
+                        class="form-control form-control-md"
+                        v-model="truck_type"
+                    >
+                        <option value="Box">Box</option>
+                        <option value="Flatbed">Flatbed</option>
+                        <option value="Semi-trailer">Semi-trailer</option>
+                    </b-select>
                 </b-col>
-              </b-row>
-              <b-row>
+            </b-row>
+            <b-row>
                 <b-col sm="3">
-                  <label>Country:</label>
+                    <label>Status:</label>
                 </b-col>
                 <b-col sm="7">
-                  <b-input
-                    type="text"
-                    class="form-control form-control-md"
-                    v-model="country"
-                  />
+                    <b-select
+                        type="text"
+                        class="form-control form-control-md"
+                        v-model="truck_status"
+                    >
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </b-select>
                 </b-col>
-              </b-row>
-              <b-row>
-                <b-col sm="8">
-                  <b-button
+            </b-row>
+            <div class="btn-toolbar">
+                <b-button
+                    id="submitBtn"
                     class="btn btn-dark btn-lg btn-block"
+                    @click="addTruck"
+                >
+                    Submit
+                </b-button>
+
+                <b-button
                     id="cancelBtn"
-                    @click="rmDetails"
-                    >Cancel</b-button
-                  >
-                </b-col>
-              </b-row>
-            </table>
-          </b-form-fieldset>
-        </div>
+                    class="btn btn-dark btn-lg btn-block"
+                    @click="cancel"
+                >
+                    Cancel
+                </b-button>
+            </div>
+            <p v-if="modalErrors.length" id="modalError">
+            <ul>
+                <li v-for="errors in modalErrors" v-bind:key="errors.page">
+                {{ errors }}
+                </li>
+            </ul>
+            </p>
+        </b-form>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -316,120 +310,164 @@ export default {
     return {
       headers: [
         {
-          hID: "User ID",
-          hFName: "First Name",
-          hLName: "Last Name",
-          hEmail: "Email",
-          hSIN: "SIN",
-          hLicense: "License No.",
-          hHomeNumb: "Home No.",
-          hCellNumb: "Cell No.",
-          hStatus: "Status",
+          h1: "Truck ID",
+          h2: "Truck No.",
+          h3: "Make",
+          h4: "Model",
+          h5: "Year",
+          h6: "Plate No.",
+          h7: "Truck Type",
+          h8: "Truck Status",
         },
       ],
-      searchName: "",
+      modalVis: false,
+      searchTruck: "",
       selectStatus: "",
-      detailsFlag: false,
-      first_name: "",
-      editedDriver: [],
+      editedTruck: "",
+      e_t_no_err: "",
+      e_t_make_err: "",
+      e_t_model_err: "",
+      e_t_year_err: "",
+      e_t_plate_no_err: "",
+      truckValid: "",
+      modalErrors: [],
+      truck_no: "",
+      truck_make: "",
+      truck_model: "",
+      truck_year: "",
+      truck_plate_no: "",
+      truck_type: "",
+      truck_status: "",
     };
   },
   computed: {
-    ...mapState(["drivers"]),
-    ...mapGetters(["allDrivers"]),
+    ...mapState(["trucks"]),
+    ...mapGetters(["allTrucks"]),
 
-    filteredDrivers: function () {
-      return this.allDrivers
-        .filter(this.searchByName)
+    filteredTruck: function () {
+      return this.allTrucks
+        .filter(this.searchByTruck)
         .filter(this.selectByStatus);
     },
   },
   methods: {
     ...mapMutations([]),
-    ...mapActions(["fetchDrivers", "updateDriver", "deleteDriver"]),
+    ...mapActions(["fetchTrucks", "updateTruck", "deleteTruck"]),
 
-    searchByName(driver) {
-      if (this.searchName.length === 0) {
+    searchByTruck(truck) {
+      if (this.searchTruck.length === 0) {
         return true;
       }
       return (
-        driver.first_name.toLowerCase().indexOf(this.searchName.toLowerCase()) >
-        -1
+        truck.truck_no.toString().indexOf(this.searchTruck.toString()) > -1
       );
     },
-    selectByStatus(driver) {
+    selectByStatus(truck) {
       if (this.selectStatus.length === 0) {
         return true;
       }
-      return driver.status.indexOf(this.selectStatus) > -1;
+      return truck.truck_status.indexOf(this.selectStatus) > -1;
     },
-    delDriver(driver) {
-      this.deleteDriver(driver);
-      window.location = "/admin/profile/truck";
+    delTruck(truck) {
+      this.deleteTruck(truck);
     },
-    detailsDriver(driver) {
-      this.detailsFlag = true;
+    editTruck(truck) {
+      this.editedTruck = truck;
+    },
+    async saveEditedTruck(editedTruck) {
+      if (!this.editedTruck.truck_no) {
+        this.e_t_no_err = "Blank!";
+      }
+      if (!this.editedTruck.truck_make) {
+        this.e_t_make_err = "Blank!";
+      }
+      if (!this.editedTruck.truck_model) {
+        this.e_t_model_err = "Blank!";
+      }
+      if (!this.editedTruck.truck_year) {
+        this.e_t_year_err = "Blank!";
+      }
+      if (!this.editedTruck.truck_plate_no) {
+        this.e_t_plate_no_err = "Blank!";
+      }
+      await axios
+        .put(`http://localhost:3000/truck/${editedTruck.truck_id}`, editedTruck)
+        .then((res) => {
+          if (res.status === 200) {
+            window.location = "/admin/profiles/truck";
+          }
+        });
+    },
+    showModal() {
+      this.modalVis = true;
+    },
+    async addTruck() {
+      try {
+        this.modalErrors = [];
 
-      this.user_id = driver.user_id;
-      this.first_name = driver.first_name;
-      this.last_name = driver.last_name;
-      this.user_email = driver.user_email;
-      this.sin_number = driver.sin_number;
-      this.license_number = driver.license_number;
-      this.home_phone = driver.home_phone;
-      this.cell_phone = driver.cell_phone;
-      this.status = driver.status;
-      this.street_number = driver.street_number;
-      this.street_name = driver.street_name;
-      this.city = driver.city;
-      this.province = driver.province;
-      this.postal_code = driver.postal_code;
-      this.country = driver.country;
+        if (!this.truck_no) {
+          this.modalErrors.push("Truck number required!");
+        }
+        if (!this.truck_make) {
+          this.modalErrors.push("Make required!");
+        }
+        if (!this.truck_model) {
+          this.modalErrors.push("Model required!");
+        }
+        if (!this.truck_year) {
+          this.modalErrors.push("Year required!");
+        }
+        if (!this.truck_plate_no) {
+          this.modalErrors.push("Plate number required!");
+        }
+        if (!this.truck_status) {
+          this.modalErrors.push("Status required!");
+        }
+        if (!this.modalErrors.length) {
+          let truck = {
+            truck_no: this.truck_no,
+            truck_make: this.truck_make,
+            truck_model: this.truck_model,
+            truck_year: this.truck_year,
+            truck_plate_no: this.truck_plate_no,
+            truck_type: this.truck_type,
+            truck_status: this.truck_status,
+          };
+          await axios.post("http://localhost:3000/truck", truck).then((res) => {
+            if (res.data === "Duplicate") {
+              this.modalErrors.push("Truck no. or plate no. duplicate!");
+            } else {
+              this.truckValid = true;
+              this.modalVis = false;
+              window.location = "/admin/profiles/truck";
+            }
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
-    async saveEditedDriver() {
-      let edited_f_n = this.first_name;
-      let edited_l_n = this.last_name;
-      let edited_u_m = this.user_email;
-      let edited_s_n = this.sin_number;
-      let edited_lic_n = this.license_number;
-      let edited_h_p = this.home_phone;
-      let edited_c_p = this.cell_phone;
-      let edited_s = this.status;
-      let e_user_id = this.user_id;
-
-      let editedDriver = [
-        {
-          first_name: edited_f_n,
-          last_name: edited_l_n,
-          user_email: edited_u_m,
-          sin_number: edited_s_n,
-          license_number: edited_lic_n,
-          home_phone: edited_h_p,
-          cell_phone: edited_c_p,
-          status: edited_s,
-          user_id: e_user_id,
-        },
-      ];
-      await axios.put("http://localhost:3000/driver/2", editedDriver);
-    },
-    rmDetails() {
-      this.detailsFlag = false;
+    cancel() {
+      this.modalVis = false;
     },
   },
   created() {
-    this.fetchDrivers();
+    this.fetchTrucks();
   },
 };
 </script>
 
 <style scoped>
+/** ---------- PAGE ---------------- */
 #truckProfPage {
   background-color: lightgray;
   height: calc(100vh - (74px + 102.67px + 25px));
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
+.btn {
+  color: black;
+}
+
+/** -------- TOP - FILTERS---------- */
 #top {
   height: 15%;
 }
@@ -444,21 +482,20 @@ h1,
 select {
   height: 48px;
   padding: 0;
+  text-align: center;
 }
 #innerTop option {
   text-align: center;
 }
 .col-sm-2 label {
+  padding-top: 10px;
   vertical-align: -webkit-baseline-middle;
+  float: right;
 }
-.btn {
-  color: black;
-}
-#middle {
-  height: 30;
-}
+
+/** -------- BOTTOM - DATA TABLE---------- */
 #bottom {
-  height: 55%;
+  height: 85%;
 }
 .jumbotron {
   margin-top: 40px;
@@ -467,14 +504,17 @@ select {
 .profilesTable {
   width: 100%;
 }
+.profilesTable input {
+  width: 70px;
+}
 table thead,
 th,
 tr,
 td {
-  padding: 16px;
+  padding: 24px;
 }
 table thead {
-  font-size: 24px;
+  font-size: 18px;
 }
 table tr {
   border-top: 2px solid black !important;
@@ -501,60 +541,86 @@ tr.disabled {
 #createBtn {
   background-color: lightgreen;
   float: right;
-  margin-right: 5px;
+  margin-right: 15px;
 }
-#details {
-  background-color: lightblue;
+#editBtn {
+  background-color: lightyellow;
 }
-#delete,
-#cancelBtn {
+#cancelBtn,
+#deleteBtn {
   background-color: lightcoral;
 }
 #cancelBtn {
   margin-left: 150px !important;
 }
-h4 {
-  text-align: middle;
-  font-size: 26px;
-  color: black;
-  padding: 20px 0 0 32px;
-}
 #bottom {
   height: 85%;
 }
-fieldset {
-  padding: 30px;
+
+/** -------------- EDIT ---------- */
+[v-cloak] {
+  display: none;
 }
-#left table,
-#right table {
-  width: 100%;
+.edit {
+  display: none;
 }
-#left,
-#right {
-  display: inline-block;
-  height: 425px;
-  margin-top: 100px;
-  width: 50%;
+.editing .edit {
+  display: block;
 }
-#left label,
-#right label {
-  float: right;
+.editing .view {
+  display: none;
 }
-#left input,
-#right input {
+#saveEditedTruckBtn {
+  background-color: lightgreen;
+}
+#editErr {
+  color: red;
+  margin-bottom: 0;
+}
+
+/** -------------- MODAL ---------- */
+#modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 725px;
+  border-style: solid;
+  border-color: black;
+  background-color: lightgray;
+}
+h4 {
+  text-align: middle;
+  font-size: 26px;
+  margin: 40px 0 20px 0;
+  color: black;
+}
+#modal input,
+#modal select {
   margin: 5px;
+  text-align: center;
+  font-size: 20px;
 }
-#left {
-  border-width: 2px 0 2px 0;
-  border-style: solid;
-  color: black;
+#modal label {
+  float: right;
+  margin-top: 12px;
 }
-#right {
-  border-width: 2px 0px 2px 0;
-  border-style: solid;
-  color: black;
+#submitBtn {
+  margin: 20px 0 0 160px;
+  background-color: lightgreen;
 }
-#right button {
-  margin: 40px 317px 0 0;
+#cancelBtn {
+  margin: 20px 0 0 145px !important;
+  background-color: lightcoral;
+}
+#modalError {
+  color: red;
+  float: right;
+  margin: 30px 100px 0 0;
+  text-align: right;
+}
+#modalError li {
+  list-style-type: none;
 }
 </style>
