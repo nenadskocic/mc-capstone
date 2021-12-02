@@ -268,7 +268,6 @@ export default {
     },
     cancel() {
       this.modalVis = false;
-      this.visFlag = true;
     },
     async addUser() {
       try {
@@ -296,7 +295,7 @@ export default {
               } else {
                 this.userValid = true;
                 this.modalVis = false;
-                window.location = "/admin//profiles/user";
+                window.location = "/admin/profiles/user";
               }
             });
         }
@@ -425,10 +424,6 @@ tr.disabled {
   border-style: solid;
   border-color: black;
   background-color: lightgray;
-}
-#modalUser {
-  display: table;
-  padding: 20px 0 20px 20px;
 }
 #addBtn {
   margin-left: 45px;
