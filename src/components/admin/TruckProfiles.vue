@@ -180,7 +180,7 @@
         <b-row>
             <h4>Add Truck</h4>
         </b-row>
-        <b-form id="truckForm" v-model="truckValid" @submit.prevent>
+        <b-form v-model="truckValid" @submit.prevent>
             <b-row>
                 <b-col sm="3">
                     <label>Truck No:</label>
@@ -252,7 +252,6 @@
                         v-model="truck_type"
                     >
                         <option value="Box">Box</option>
-                        <option value="Flatbed">Flatbed</option>
                         <option value="Semi-trailer">Semi-trailer</option>
                     </b-select>
                 </b-col>
@@ -390,13 +389,24 @@ export default {
       if (!this.editedTruck.truck_plate_no) {
         this.e_t_plate_no_err = "Blank!";
       }
-      await axios
-        .put(`http://localhost:3000/truck/${editedTruck.truck_id}`, editedTruck)
-        .then((res) => {
-          if (res.status === 200) {
-            window.location = "/admin/profiles/truck";
-          }
-        });
+      if (
+        this.editedTruck.truck_no &&
+        this.editedTruck.truck_make &&
+        this.editedTruck.truck_model &&
+        this.editedTruck.truck_year &&
+        this.editedTruck.truck_plate_no
+      ) {
+        await axios
+          .put(
+            `http://localhost:3000/truck/${editedTruck.truck_id}`,
+            editedTruck
+          )
+          .then((res) => {
+            if (res.status === 200) {
+              window.location = "/admin/profiles/truck";
+            }
+          });
+      }
     },
     showModal() {
       this.modalVis = true;
@@ -552,9 +562,6 @@ tr.disabled {
 }
 #cancelBtn {
   margin-left: 150px !important;
-}
-#bottom {
-  height: 85%;
 }
 
 /** -------------- EDIT ---------- */
