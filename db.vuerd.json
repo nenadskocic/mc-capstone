@@ -878,7 +878,7 @@
           {
             "name": "trailer_year",
             "comment": "",
-            "dataType": "TEXT",
+            "dataType": "INTEGER",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -991,6 +991,29 @@
             "id": "42c8cc03-4cd6-4b11-925d-ebb45c170ed6"
           },
           {
+            "name": "ride_type",
+            "comment": "",
+            "dataType": "TEXT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "8bdee436-e433-4bbf-87a2-766173109467"
+          },
+          {
             "name": "trailer_status",
             "comment": "",
             "dataType": "TEXT",
@@ -1022,7 +1045,7 @@
               "autoIncrement": false,
               "primaryKey": false,
               "unique": false,
-              "notNull": true
+              "notNull": false
             },
             "ui": {
               "active": false,
@@ -1038,10 +1061,10 @@
           }
         ],
         "ui": {
-          "active": false,
+          "active": true,
           "left": 3295.5212,
           "top": 2054.447,
-          "zIndex": 319,
+          "zIndex": 371,
           "widthName": 60,
           "widthComment": 60,
           "color": "#009688"
@@ -1112,7 +1135,7 @@
       {
         "identification": false,
         "relationshipType": "OneOnly",
-        "startRelationshipType": "Dash",
+        "startRelationshipType": "Ring",
         "start": {
           "tableId": "b5d64a6c-3137-4f77-8d2a-27a63edec3da",
           "columnIds": [
