@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import auth from './modules/auth';
 import driver from './modules/driver';
 import truck from './modules/truck';
+import trailer from './modules/trailer';
 
 Vue.use(Vuex);
 
@@ -11,5 +12,6 @@ export default new Vuex.Store({
         auth,
         driver,
         truck,
+        trailer,
     }
 });
