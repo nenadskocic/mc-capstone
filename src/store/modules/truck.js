@@ -33,7 +33,7 @@ export default {
             state.trucks.push(truck);
         },
         UPDATE_TRUCK: (state, editedTruck) => {
-            const index = state.trucks.findIndex(u => u.id === editedTruck.truck_id);
+            const index = state.trucks.findIndex(u => u.truck_id === editedTruck.truck_id);
             
             if(index !== -1) {1
                 state.trucks.splice(index, 1, editedTruck);
