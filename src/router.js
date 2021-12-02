@@ -13,6 +13,7 @@ import Contact from './components/public/Contact.vue'
 import UserProfiles from './components/admin/UserProfiles.vue'
 import DriverProfiles from './components/admin/DriverProfiles.vue'
 import TruckProfiles from './components/admin/TruckProfiles.vue'
+import TrailerProfiles from './components/admin/TrailerProfiles.vue'
 
 export default new Router({
     mode: "history",
@@ -33,6 +34,7 @@ export default new Router({
         { path: '/admin/profiles/user', name: 'userProfiles', component: UserProfiles, meta: { requiresAuth: true } },
         { path: '/admin/profiles/driver', name: 'driverProfiles', component: DriverProfiles, meta: { requiresAuth: true } },
         { path: '/admin/profiles/truck', name: 'truckProfiles', component: TruckProfiles, meta: { requiresAuth: true } },
+        { path: '/admin/profiles/trailer', name: 'trailerProfiles', component: TrailerProfiles, meta: { requiresAuth: true } },
     ]
 })
 
