@@ -1,3 +1,7 @@
+/**
+ * I, Nenad Skocic, 000107650 certify that this material is my original work. 
+ * No other person's work has been used without due acknowledgment.
+ */
 <template>
   <div>
     <b-navbar type="dark" toggleable="lg">
@@ -28,6 +32,9 @@
             >
             <b-dropdown-item :to="{ name: 'trailerProfiles' }"
               >Trailer</b-dropdown-item
+            >
+            <b-dropdown-item :to="{ name: 'clientProfiles' }"
+              >Client</b-dropdown-item
             >
           </b-nav-item-dropdown>
         </b-navbar-nav>
