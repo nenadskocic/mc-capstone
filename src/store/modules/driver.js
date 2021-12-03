@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const resource_uri = "http://localhost:3000/driver";
+const resource_uri = "http://localhost:3000/driver_info";
 
 export default {
     state: {
