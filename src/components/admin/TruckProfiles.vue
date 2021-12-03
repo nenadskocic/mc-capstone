@@ -403,7 +403,7 @@ export default {
           )
           .then((res) => {
             if (res.status === 200) {
-              window.location = "/admin/profiles/truck";
+              window.location = "/admin/profile/truck";
             }
           });
       }
@@ -449,7 +449,7 @@ export default {
             } else {
               this.truckValid = true;
               this.modalVis = false;
-              window.location = "/admin/profiles/truck";
+              window.location = "/admin/profile/truck";
             }
           });
         }
@@ -501,6 +501,7 @@ select {
   padding-top: 10px;
   vertical-align: -webkit-baseline-middle;
   float: right;
+  font-size: 20px;
 }
 
 /** -------- BOTTOM - DATA TABLE---------- */
@@ -560,9 +561,7 @@ tr.disabled {
 #deleteBtn {
   background-color: lightcoral;
 }
-#cancelBtn {
-  margin-left: 150px !important;
-}
+
 
 /** -------------- EDIT ---------- */
 [v-cloak] {
