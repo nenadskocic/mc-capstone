@@ -3,7 +3,5 @@
  * No other person's work has been used without due acknowledgment.
  */
 module.exports = {
-  presets: [
-    '@vue/cli-plugin-babel/preset'
-  ]
-}
+    'secret': 'L7P92UAmpyPAuf8hdheVx3xhR494GpxZsL77GMvKrZ2z4qw6ZQRJgTeWWDph8LhbtsMU2UBF7hErRqdTPUnYxCQnLaVr4zZrkjgGcgNNzRn8rTUMZHgrKgr6veFNRWP4'
+};
