@@ -4,7 +4,7 @@
       <b-row>
         <h4>Sign In</h4>
       </b-row>
-      <b-form v-model="loginValid" @submit.prevent>
+      <b-form @submit.prevent>
         <b-row>
           <b-col sm="3">
             <label>Username:</label>
@@ -42,7 +42,7 @@
       </b-form>
       <b-row>
         <router-link
-          to="/public/securityQuestions"
+          to="/securityQuestions"
           custom
           v-slot="{ navigate }"
           exact
@@ -55,7 +55,7 @@
           >
         </router-link>
         <router-link
-          to="/public/registration"
+          to="/registration"
           custom
           v-slot="{ navigate }"
           exact
@@ -78,22 +78,33 @@ export default {
   data: () => ({
     username: "",
     password: "",
-    loginValid: false,
     error: "",
   }),
   methods: {
-    async login() {
+    login() {
       try {
         let user = {
           username: this.username,
           password: this.password,
         };
-        await axios.post("http://localhost:3000/login", user).then((res) => {
-          if (res.data === "Invalid") {
-            this.error = "Invalid credentials!";
-          } else {
-            this.loginValid = true;
-            this.$router.replace("/admin/profiles/user");
+        axios.post("http://localhost:3000/login", user).then((res) => {
+          let is_admin = res.data.authUser[0].is_admin;
+
+          localStorage.setItem("authUser", JSON.stringify(res.data.authUser));
+          localStorage.setItem("jwt", res.data.token);
+
+          if (localStorage.getItem("jwt") != null) {
+            this.$emit("loggedIn");
+
+            if (this.$route.params.nextUrl != null) {
+              this.$router.push(this.$route.params.nextUrl);
+            } else {
+              if (is_admin == 1) {
+                this.$router.push("/admin/profile/user").catch(() => {});
+              } else {
+                this.$router.push("/user/dispatch").catch(() => {});
+              }
+            }
           }
         });
       } catch (error) {
