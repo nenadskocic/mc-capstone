@@ -16,20 +16,23 @@
               />
             </b-col>
             <b-col sm="1">
-              <label>User Type:</label>
+              <label>Admin:</label>
             </b-col>
             <b-col sm="2" id="type">
               <b-select
-                type="text"
+                type="number"
                 class="form-control form-control-md"
                 v-model="selectType"
               >
                 <option></option>
-                <option value="general">general</option>
-                <option value="admin">admin</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
               </b-select>
             </b-col>
-            <b-col sm="6">
+            <b-col sm="2">
+              <label>0-False, 1-True</label>
+            </b-col>
+            <b-col sm="4">
               <b-button
                 class="btn btn-dark btn-lg btn-block"
                 id="createBtn"
@@ -72,16 +75,16 @@
                 </b-td>
                 <b-td>
                   <div class="view">
-                    {{ user.type }}
+                    {{ user.is_admin }}
                   </div>
                   <div class="edit">
                     <b-select
-                      type="text"
+                      type="number"
                       class="form-control form-control-md"
-                      v-model="user.type"
+                      v-model="user.is_admin"
                     >
-                      <option value="general">general</option>
-                      <option value="admin">admin</option>
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
                     </b-select>
                   </div>
                 </b-td>
@@ -209,10 +212,9 @@ export default {
           hID: "User ID",
           hUsername: "Username",
           hEmail: "Email",
-          hType: "Type",
+          hType: "Admin",
         },
       ],
-      isAdmin: false,
       searchUsername: "",
       selectType: "",
       userValid: false,
@@ -222,7 +224,7 @@ export default {
       lName: "",
       password: "",
       editedUser: "",
-      type: "",
+      is_admin: "",
       editUsernameErr: "",
     };
   },
@@ -258,7 +260,7 @@ export default {
       if (this.selectType.length === 0) {
         return true;
       }
-      return user.type.indexOf(this.selectType) > -1;
+      return user.is_admin.toString().indexOf(this.selectType.toString()) > -1;
     },
     delUser(user) {
       this.deleteUser(user);
@@ -295,7 +297,7 @@ export default {
               } else {
                 this.userValid = true;
                 this.modalVis = false;
-                window.location = "/admin/profiles/user";
+                window.location = "/admin/profile/user";
               }
             });
         }
@@ -306,18 +308,21 @@ export default {
     editUser(user) {
       this.editedUser = user;
     },
-    saveEditedUser(editedUser) {
+    async saveEditedUser(editedUser) {
       if (!this.editedUser.username) {
         this.editUsernameErr = "Please input a value.";
       } else {
-        for (var i = 0; i < this.allUsers.length; i++) {
-          if (editedUser.username !== this.allUsers[i].username) {
-            window.location = "/admin/profiles/user";
-            return this.updateUser(editedUser);
-          } else {
-            return (this.editUsernameErr = "Username in use.");
-          }
-        }
+        await axios
+          .put(`http://localhost:3000/user/${editedUser.auth_id}`, editedUser)
+          .then((res) => {
+            if (res.data === "Duplicate") {
+              this.editUsernameErr = "Duplicate!";
+            } else {
+              this.userValid = true;
+              this.modalVis = false;
+              window.location = "/admin/profile/user";
+            }
+          });
       }
     },
   },
@@ -343,7 +348,17 @@ h1,
   margin: 0;
 }
 .col-sm-1 label {
-  padding: 10px 0;
+  padding: 10px;
+  font-size: 20px;
+  float: right;
+}
+.col-sm-2 label {
+  padding: 10px;
+  font-size: 20px;
+  float: left;
+}
+.col-sm-2 input {
+  text-align: center;
 }
 #innerTop input,
 select {
@@ -366,7 +381,7 @@ select {
   height: 85%;
 }
 .jumbotron {
-  margin-top: 30px;
+  margin-top: 40px;
   background-color: darkgray;
 }
 .profilesTable {
