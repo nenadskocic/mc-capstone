@@ -1,20 +1,18 @@
+/**
+ * I, Nenad Skocic, 000107650 certify that this material is my original work. 
+ * No other person's work has been used without due acknowledgment.
+ */
 import vue from 'vue'
 import Router from 'vue-router'
 import Login from './components/public/Login.vue'
 import Registration from './components/public/Registration.vue'
-// import SecurityQuestions from './components/public/SecurityQuestions.vue'
-// import PasswordChange from './components/public/PasswordChange.vue'
-// import About from './components/public/About.vue'
-// import Services from './components/public/Services.vue'
-// import News from './components/public/News.vue'
-// import Team from './components/public/Team.vue'
-// import Contact from './components/public/Contact.vue'
 import Dispatch from './components/user/Dispatch.vue'
 
 import UserProfiles from './components/admin/UserProfiles.vue'
 import DriverProfiles from './components/admin/DriverProfiles.vue'
 import TruckProfiles from './components/admin/TruckProfiles.vue'
 import TrailerProfiles from './components/admin/TrailerProfiles.vue'
+import ClientProfiles from './components/admin/ClientProfiles.vue'
 
 vue.use(Router);
 
@@ -25,13 +23,8 @@ let router = new Router({
         { path: '/', name: 'home', component: Login, meta: { guest: true }  },
         { path: '/login', name: 'login', component: Login, meta: { guest: true } },
         { path: '/registration', name: 'registration', component: Registration, meta: { guest: true } },
-        // { path: '/securityQuestions', name: 'securityQuestions', component: SecurityQuestions, meta: { guest: true } },
-        // { path: '/passwordChange', name: 'passwordChange', component: PasswordChange, meta: { guest: true } },
-        // { path: '/public/about', name: 'about', component: About },
-        // { path: '/public/services', name: 'services', component: Services },
-        // { path: '/public/news', name: 'news', component: News },
-        // { path: '/public/team', name: 'team', component: Team },
-        // { path: '/public/contact', name: 'contact', component: Contact },
+
+        // User paths
         { path: '/user/dispatch', name: 'dispatch', component: Dispatch, meta: { requiresAuth: true } },
 
         // Admin paths
@@ -39,6 +32,7 @@ let router = new Router({
         { path: '/admin/profile/driver', name: 'driverProfiles', component: DriverProfiles, meta: { requiresAuth: true, is_admin: true } },
         { path: '/admin/profile/truck', name: 'truckProfiles', component: TruckProfiles, meta: { requiresAuth: true, is_admin: true } },
         { path: '/admin/profile/trailer', name: 'trailerProfiles', component: TrailerProfiles, meta: { requiresAuth: true, is_admin: true } },
+        { path: '/admin/profile/client', name: 'clientProfiles', component: ClientProfiles, meta: { requiresAuth: true, is_admin: true } },
     ]
 })
 
