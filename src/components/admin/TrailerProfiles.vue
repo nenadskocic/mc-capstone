@@ -480,7 +480,7 @@ export default {
           )
           .then((res) => {
             if (res.status === 200) {
-              window.location = "/admin/profiles/trailer";
+              window.location = "/admin/profile/trailer";
             }
           });
       }
@@ -539,7 +539,7 @@ export default {
               } else {
                 this.trailerValid = true;
                 this.modalVis = false;
-                window.location = "/admin/profiles/trailer";
+                window.location = "/admin/profile/trailer";
               }
             });
         }
@@ -591,6 +591,7 @@ select {
   padding-top: 10px;
   vertical-align: -webkit-baseline-middle;
   float: right;
+  font-size: 20px;
 }
 
 /** -------- BOTTOM - DATA TABLE---------- */
