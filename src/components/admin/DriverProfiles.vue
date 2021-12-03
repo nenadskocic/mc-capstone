@@ -26,11 +26,14 @@
               >
                 <option></option>
                 <option value="Active">Active</option>
-                <option value="Terminated">Terminated</option>
+                <option value="Inactive">Inactive</option>
               </b-select>
             </b-col>
             <b-col sm="4">
-              <b-button class="btn btn-dark btn-lg btn-block" id="createBtn"
+              <b-button
+                class="btn btn-dark btn-lg btn-block"
+                id="createBtn"
+                @click="showModal"
                 >Create</b-button
               >
             </b-col>
@@ -90,11 +93,10 @@
                   {{ driver.status }}
                 </div>
               </b-td>
-
-              <b-td class="view">
+              <b-td>
                 <b-button
                   class="btn btn-dark btn-lg btn-block"
-                  id="details"
+                  id="detailsBtn"
                   @click="detailsDriver(driver)"
                   >Details</b-button
                 >
@@ -102,7 +104,7 @@
               <b-td>
                 <b-button
                   class="btn btn-dark btn-lg btn-block"
-                  id="delete"
+                  id="deleteBtn"
                   @click="delDriver(driver)"
                   >Delete</b-button
                 >
@@ -124,6 +126,7 @@
                     type="text"
                     class="form-control form-control-md"
                     v-model="first_name"
+                    disabled
                   />
                 </b-col>
               </b-row>
@@ -136,6 +139,7 @@
                     type="text"
                     class="form-control form-control-md"
                     v-model="last_name"
+                    disabled
                   />
                 </b-col>
               </b-row>
@@ -157,7 +161,7 @@
                 </b-col>
                 <b-col sm="7">
                   <b-input
-                    type="text"
+                    type="tel"
                     class="form-control form-control-md"
                     v-model="home_phone"
                   />
@@ -169,7 +173,7 @@
                 </b-col>
                 <b-col sm="7">
                   <b-input
-                    type="text"
+                    type="tel"
                     class="form-control form-control-md"
                     v-model="cell_phone"
                   />
@@ -184,6 +188,7 @@
                     type="text"
                     class="form-control form-control-md"
                     v-model="sin_number"
+                    disabled
                   />
                 </b-col>
               </b-row>
@@ -196,6 +201,7 @@
                     type="text"
                     class="form-control form-control-md"
                     v-model="license_number"
+                    disabled
                   />
                 </b-col>
               </b-row>
@@ -204,11 +210,14 @@
                   <label>Status:</label>
                 </b-col>
                 <b-col sm="7">
-                  <b-input
+                  <b-select
                     type="text"
                     class="form-control form-control-md"
                     v-model="status"
-                  />
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </b-select>
                 </b-col>
               </b-row>
             </table>
@@ -223,7 +232,7 @@
                 </b-col>
                 <b-col sm="7">
                   <b-input
-                    type="text"
+                    type="number"
                     class="form-control form-control-md"
                     v-model="street_number"
                   />
@@ -247,7 +256,7 @@
                 </b-col>
                 <b-col sm="7">
                   <b-input
-                    type="email"
+                    type="text"
                     class="form-control form-control-md"
                     v-model="city"
                   />
@@ -286,11 +295,20 @@
                     type="text"
                     class="form-control form-control-md"
                     v-model="country"
+                    disabled
                   />
                 </b-col>
               </b-row>
               <b-row>
-                <b-col sm="8">
+                <b-col sm="5">
+                  <b-button
+                    class="btn btn-dark btn-lg btn-block"
+                    id="saveEditedBtn"
+                    @click="saveEditedDriver"
+                    >Save</b-button
+                  >
+                </b-col>
+                <b-col sm="4">
                   <b-button
                     class="btn btn-dark btn-lg btn-block"
                     id="cancelBtn"
@@ -300,6 +318,215 @@
                 </b-col>
               </b-row>
             </table>
+          </b-form-fieldset>
+        </div>
+      </div>
+      <div id="modal" v-if="modalVis">
+        <b-row>
+          <h4>Add Driver</h4>
+        </b-row>
+        <div id="modalLeft">
+          <b-form-fieldset>
+            <table>
+              <b-row>
+                <b-col sm="4">
+                  <label>First Name:</label>
+                </b-col>
+                <b-col sm="8">
+                  <b-input
+                    type="text"
+                    class="form-control form-control-md"
+                    v-model="n_first_name"
+                  />
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="4">
+                  <label>Last Name:</label>
+                </b-col>
+                <b-col sm="8">
+                  <b-input
+                    type="text"
+                    class="form-control form-control-md"
+                    v-model="n_last_name"
+                  />
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="4">
+                  <label>Email:</label>
+                </b-col>
+                <b-col sm="8">
+                  <b-input
+                    type="email"
+                    class="form-control form-control-md"
+                    v-model="n_user_email"
+                  />
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="4">
+                  <label>Home No:</label>
+                </b-col>
+                <b-col sm="8">
+                  <b-input
+                    type="tel"
+                    class="form-control form-control-md"
+                    v-model="n_home_phone"
+                  />
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="4">
+                  <label>Cell No:</label>
+                </b-col>
+                <b-col sm="8">
+                  <b-input
+                    type="tel"
+                    class="form-control form-control-md"
+                    v-model="n_cell_phone"
+                  />
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="4">
+                  <label>SIN No:</label>
+                </b-col>
+                <b-col sm="8">
+                  <b-input
+                    type="text"
+                    class="form-control form-control-md"
+                    v-model="n_sin_number"
+                  />
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="4">
+                  <label>License No:</label>
+                </b-col>
+                <b-col sm="8">
+                  <b-input
+                    type="text"
+                    class="form-control form-control-md"
+                    v-model="n_license_number"
+                  />
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="4">
+                  <label>Status:</label>
+                </b-col>
+                <b-col sm="8">
+                  <b-select
+                    type="text"
+                    class="form-control form-control-md"
+                    v-model="n_status"
+                  >
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </b-select>
+                </b-col>
+              </b-row>
+            </table>
+          </b-form-fieldset>
+        </div>
+        <div id="modalRight">
+          <b-form-fieldset>
+            <table>
+              <b-row>
+                <b-col sm="4">
+                  <label>Street No:</label>
+                </b-col>
+                <b-col sm="8">
+                  <b-input
+                    type="number"
+                    class="form-control form-control-md"
+                    v-model="n_street_number"
+                  />
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="4">
+                  <label>Street Name:</label>
+                </b-col>
+                <b-col sm="8">
+                  <b-input
+                    type="text"
+                    class="form-control form-control-md"
+                    v-model="n_street_name"
+                  />
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="4">
+                  <label>City:</label>
+                </b-col>
+                <b-col sm="8">
+                  <b-input
+                    type="text"
+                    class="form-control form-control-md"
+                    v-model="n_city"
+                  />
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="4">
+                  <label>Province:</label>
+                </b-col>
+                <b-col sm="8">
+                  <b-input
+                    type="text"
+                    class="form-control form-control-md"
+                    v-model="n_province"
+                  />
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="4">
+                  <label>Postal Code:</label>
+                </b-col>
+                <b-col sm="8">
+                  <b-input
+                    type="text"
+                    class="form-control form-control-md"
+                    v-model="n_postal_code"
+                  />
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="4">
+                  <label>Country:</label>
+                </b-col>
+                <b-col sm="8">
+                  <b-input
+                    type="text"
+                    class="form-control form-control-md"
+                    v-model="n_country"
+                  />
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="1">
+                  <b-button
+                    class="btn btn-dark btn-lg btn-block"
+                    id="createModalBtn"
+                    @click="createDriver"
+                    >Submit</b-button
+                  >
+                </b-col>
+                <b-col sm="2">
+                  <b-button
+                    class="btn btn-dark btn-lg btn-block"
+                    id="cancelModalBtn"
+                    @click="rmModal"
+                    >Cancel</b-button
+                  >
+                </b-col>
+              </b-row>
+            </table>
+            <div id="modalErr">
+              {{ modalErrors }}
+            </div>
           </b-form-fieldset>
         </div>
       </div>
@@ -331,7 +558,23 @@ export default {
       selectStatus: "",
       detailsFlag: false,
       first_name: "",
-      editedDriver: [],
+
+      modalVis: false,
+      n_first_name: "",
+      n_last_name: "",
+      n_user_email: "",
+      n_home_phone: "",
+      n_cell_phone: "",
+      n_sin_number: "",
+      n_license_number: "",
+      n_status: "",
+      n_street_number: "",
+      n_street_name: "",
+      n_city: "",
+      n_province: "",
+      n_postal_code: "",
+      n_country: "",
+      modalErrors: "",
     };
   },
   computed: {
@@ -365,7 +608,7 @@ export default {
     },
     delDriver(driver) {
       this.deleteDriver(driver);
-      window.location = "/admin/profiles/driver";
+      window.location = "/admin/profile/driver";
     },
     detailsDriver(driver) {
       this.detailsFlag = true;
@@ -379,6 +622,8 @@ export default {
       this.home_phone = driver.home_phone;
       this.cell_phone = driver.cell_phone;
       this.status = driver.status;
+
+      this.address_id = driver.address_id;
       this.street_number = driver.street_number;
       this.street_name = driver.street_name;
       this.city = driver.city;
@@ -387,6 +632,7 @@ export default {
       this.country = driver.country;
     },
     async saveEditedDriver() {
+      let e_user_id = this.user_id;
       let edited_f_n = this.first_name;
       let edited_l_n = this.last_name;
       let edited_u_m = this.user_email;
@@ -395,10 +641,18 @@ export default {
       let edited_h_p = this.home_phone;
       let edited_c_p = this.cell_phone;
       let edited_s = this.status;
-      let e_user_id = this.user_id;
+
+      let edited_user_id = this.address_id;
+      let edited_street_no = this.street_number;
+      let edited_street_name = this.street_name;
+      let edited_city = this.city;
+      let edited_province = this.province;
+      let edited_postal_code = this.postal_code;
+      let edited_country = this.country;
 
       let editedDriver = [
         {
+          user_id: e_user_id,
           first_name: edited_f_n,
           last_name: edited_l_n,
           user_email: edited_u_m,
@@ -407,13 +661,118 @@ export default {
           home_phone: edited_h_p,
           cell_phone: edited_c_p,
           status: edited_s,
-          user_id: e_user_id,
         },
       ];
-      await axios.put("http://localhost:3000/driver/2", editedDriver);
+
+      let editedDriverAddress = [
+        {
+          street_number: edited_street_no,
+          street_name: edited_street_name,
+          city: edited_city,
+          province: edited_province,
+          postal_code: edited_postal_code,
+          country: edited_country,
+          user_id: e_user_id,
+          address_id: edited_user_id,
+        },
+      ];
+
+      const axios1 = axios.put(
+        `http://localhost:3000/driver/${editedDriver[0].user_id}`,
+        editedDriver
+      );
+      const axios2 = axios.put(
+        `http://localhost:3000/driver_address/${editedDriverAddress[0].address_id}`,
+        editedDriverAddress
+      );
+
+      await axios.all([axios1, axios2]).then(() => {
+        window.location = "/admin/profile/driver";
+      });
     },
     rmDetails() {
       this.detailsFlag = false;
+    },
+    showModal() {
+      this.modalVis = true;
+    },
+    rmModal() {
+      this.modalVis = false;
+    },
+    async createDriver() {
+      if (
+        !this.n_first_name ||
+        !this.n_last_name ||
+        !this.n_user_email ||
+        !this.n_home_phone ||
+        !this.n_cell_phone ||
+        !this.n_sin_number ||
+        !this.n_license_number ||
+        !this.n_status ||
+        !this.n_street_number ||
+        !this.n_street_name ||
+        !this.n_city ||
+        !this.n_province ||
+        !this.n_postal_code ||
+        !this.n_country
+      ) {
+        this.modalErrors = "Empty fields!";
+      } else {
+        let newDriver = {
+          first_name: this.n_first_name,
+          last_name: this.n_last_name,
+          user_email: this.n_user_email,
+          home_phone: this.n_home_phone,
+          cell_phone: this.n_cell_phone,
+          sin_number: this.n_sin_number,
+          license_number: this.n_license_number,
+          status: this.n_status,
+        };
+        let newDriverAddress = {
+          street_number: this.n_street_number,
+          street_name: this.n_street_name,
+          city: this.n_city,
+          province: this.n_province,
+          postal_code: this.n_postal_code,
+          country: this.n_country,
+        };
+
+        // axios.post("http://localhost:3000/driver", newDriver).then((res) {
+
+        // });
+
+        // const axios2 = axios.post(
+        //   "http://localhost:3000/driver_address",
+        //   newDriverAddress
+        // );
+
+        await axios
+          .post("http://localhost:3000/driver", newDriver)
+          .then((res) => {
+            if (res.data === "Duplicate") {
+              this.modalErrors = "Data used by other user!";
+            } else {
+              axios.post(
+                "http://localhost:3000/driver_address",
+                newDriverAddress
+              );
+              window.location = "/admin/profile/driver";
+            }
+          });
+
+        // const axios1 = axios.post("http://localhost:3000/driver", newDriver);
+        // const axios2 = axios.post(
+        //   "http://localhost:3000/driver_address",
+        //   newDriverAddress
+        // );
+        // await axios.all([axios1, axios2]).then((res) => {
+        //   if (res.status === 200) {
+        //     window.location = "/admin/profile/driver";
+        //   } else {
+        //     this.modalErrors = "Duplicate values!";
+        //   }
+        // });
+      }
     },
   },
   created() {
@@ -423,6 +782,7 @@ export default {
 </script>
 
 <style scoped>
+/** ---------- PAGE ---------------- */
 #driverProfPage {
   background-color: lightgray;
   height: calc(100vh - (74px + 102.67px + 25px));
@@ -430,6 +790,11 @@ export default {
   display: flex;
   flex-direction: column;
 }
+.btn {
+  color: black;
+}
+
+/** -------- TOP - FILTERS---------- */
 #top {
   height: 15%;
 }
@@ -450,15 +815,14 @@ select {
 }
 .col-sm-2 label {
   vertical-align: -webkit-baseline-middle;
+  padding-top: 7.5px;
+  font-size: 20px;
+  float: right;
 }
-.btn {
-  color: black;
-}
-#middle {
-  height: 30;
-}
+
+/** -------- BOTTOM - DATA TABLE---------- */
 #bottom {
-  height: 55%;
+  height: 85%;
 }
 .jumbotron {
   margin-top: 40px;
@@ -503,24 +867,21 @@ tr.disabled {
   float: right;
   margin-right: 5px;
 }
-#details {
+#detailsBtn {
   background-color: lightblue;
 }
-#delete,
-#cancelBtn {
+#deleteBtn {
   background-color: lightcoral;
 }
+
+/** -------- BOTTOM - DETAILS ---------- */
+#saveEditedBtn {
+  background-color: lightgreen;
+  margin: 20px 0 0 190px !important;
+}
 #cancelBtn {
-  margin-left: 150px !important;
-}
-h4 {
-  text-align: middle;
-  font-size: 26px;
-  color: black;
-  padding: 20px 0 0 32px;
-}
-#bottom {
-  height: 85%;
+  background-color: lightcoral;
+  margin: 20px 0 0 260px !important;
 }
 fieldset {
   padding: 30px;
@@ -535,26 +896,70 @@ fieldset {
   height: 425px;
   margin-top: 100px;
   width: 50%;
+  border-width: 2px 0 2px 0;
+  border-style: solid;
+  color: black;
 }
 #left label,
 #right label {
   float: right;
+  padding-top: 10px;
 }
 #left input,
 #right input {
   margin: 5px;
 }
-#left {
-  border-width: 2px 0 2px 0;
+
+/** -------- MODAL ---------- */
+#modal {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 850px;
+  height: 600px;
   border-style: solid;
-  color: black;
+  border-color: black;
+  background-color: lightgray;
 }
-#right {
-  border-width: 2px 0px 2px 0;
-  border-style: solid;
-  color: black;
+#modal h4 {
+  text-align: center;
+  font-size: 36px;
+  margin-top: 20px;
 }
-#right button {
-  margin: 40px 317px 0 0;
+fieldset {
+  padding: 30px;
+}
+#modalLeft table,
+#modalRight table {
+  width: 100%;
+}
+#modalLeft,
+#modalRight {
+  display: inline-block;
+  height: 425px;
+  width: 50%;
+}
+#modalLeft label,
+#modalRight label {
+  float: right;
+  padding-top: 10px;
+}
+#modalLeft input,
+#modalRight input {
+  margin: 5px;
+}
+#createModalBtn {
+  background-color: lightgreen;
+  margin: 20px 0 0 135px;
+}
+#cancelModalBtn {
+  background-color: lightcoral;
+  margin: 20px 0 0 238px;
+}
+#modalErr {
+  float: right;
+  margin-top: 20px;
+  color: red;
 }
 </style>
