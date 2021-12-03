@@ -1,3 +1,7 @@
+/**
+ * I, Nenad Skocic, 000107650 certify that this material is my original work. 
+ * No other person's work has been used without due acknowledgment.
+ */
 <template>
   <div id="driverProfPage">
     <div id="top">
@@ -498,11 +502,14 @@
                   <label>Country:</label>
                 </b-col>
                 <b-col sm="8">
-                  <b-input
+                  <b-select
                     type="text"
                     class="form-control form-control-md"
                     v-model="n_country"
-                  />
+                  >
+                    <option value="Canada">Canada</option>
+                    <option value="USA">USA</option>
+                  </b-select>
                 </b-col>
               </b-row>
               <b-row>
@@ -737,15 +744,6 @@ export default {
           country: this.n_country,
         };
 
-        // axios.post("http://localhost:3000/driver", newDriver).then((res) {
-
-        // });
-
-        // const axios2 = axios.post(
-        //   "http://localhost:3000/driver_address",
-        //   newDriverAddress
-        // );
-
         await axios
           .post("http://localhost:3000/driver", newDriver)
           .then((res) => {
@@ -759,19 +757,6 @@ export default {
               window.location = "/admin/profile/driver";
             }
           });
-
-        // const axios1 = axios.post("http://localhost:3000/driver", newDriver);
-        // const axios2 = axios.post(
-        //   "http://localhost:3000/driver_address",
-        //   newDriverAddress
-        // );
-        // await axios.all([axios1, axios2]).then((res) => {
-        //   if (res.status === 200) {
-        //     window.location = "/admin/profile/driver";
-        //   } else {
-        //     this.modalErrors = "Duplicate values!";
-        //   }
-        // });
       }
     },
   },
@@ -881,7 +866,7 @@ tr.disabled {
 }
 #cancelBtn {
   background-color: lightcoral;
-  margin: 20px 0 0 260px !important;
+  margin: 20px 0 0 265px !important;
 }
 fieldset {
   padding: 30px;
@@ -894,7 +879,7 @@ fieldset {
 #right {
   display: inline-block;
   height: 425px;
-  margin-top: 100px;
+  margin-top: 50px;
   width: 50%;
   border-width: 2px 0 2px 0;
   border-style: solid;
@@ -908,6 +893,10 @@ fieldset {
 #left input,
 #right input {
   margin: 5px;
+}
+#left select,
+#right select {
+  margin-left: 5px;
 }
 
 /** -------- MODAL ---------- */
@@ -948,6 +937,12 @@ fieldset {
 #modalLeft input,
 #modalRight input {
   margin: 5px;
+}
+#modalLeft select {
+  margin-left: 5px;
+}
+#modalRight select {
+  margin-left: 5px;
 }
 #createModalBtn {
   background-color: lightgreen;
