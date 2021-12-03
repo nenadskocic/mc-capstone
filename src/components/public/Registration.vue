@@ -73,7 +73,7 @@
       </p>
       <b-row>
         <router-link
-          to="/public/login"
+          to="/login"
           custom
           v-slot="{ navigate }"
           exact
@@ -81,7 +81,7 @@
           id="homeLink"
           replace
         >
-          <span @click="navigate" @kepress.enter="navigate" role="link"
+          <span @click="navigate" @keypress.enter="navigate" role="link"
             >Go back to Home</span
           >
         </router-link>
@@ -112,7 +112,7 @@ export default {
     async register() {
       try {
         this.error = [];
-        let type = "general";
+        let is_admin = 1;
 
         if (!this.fName) {
           this.error.push("First name required!");
@@ -127,7 +127,7 @@ export default {
           let user = {
             username: this.username,
             password: this.password,
-            type: type,
+            is_admin: is_admin,
           };
           await axios
             .post("http://localhost:3000/register", user)
@@ -136,7 +136,7 @@ export default {
                 this.error.push("Username provided already exists!");
               } else {
                 this.regValid = true;
-                this.$router.push("/public/login");
+                this.$router.push("/login");
               }
             });
         }
