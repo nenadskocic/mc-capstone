@@ -10,24 +10,59 @@
           </b-navbar-brand>
         </b-navbar-nav>
         <b-navbar-nav class="mx-auto" id="middle">
-          <b-nav-item :to="{ name: 'home' }"><p>Home</p></b-nav-item>
+          <!-- <b-nav-item :to="{ name: 'login' }"><p>Home</p></b-nav-item>
           <b-nav-item :to="{ name: 'about' }"><p>About Us</p></b-nav-item>
           <b-nav-item :to="{ name: 'services' }"><p>Services</p></b-nav-item>
           <b-nav-item :to="{ name: 'news' }"><p>News</p></b-nav-item>
           <b-nav-item :to="{ name: 'team' }"><p>Our Team</p></b-nav-item>
-          <b-nav-item :to="{ name: 'contact' }"><p>Contact Us</p></b-nav-item>
+          <b-nav-item :to="{ name: 'contact' }"><p>Contact Us</p></b-nav-item> -->
+          <b-nav-item-dropdown text="Profiles" right>
+            <b-dropdown-item :to="{ name: 'userProfiles' }"
+              >User</b-dropdown-item
+            >
+            <b-dropdown-item :to="{ name: 'driverProfiles' }"
+              >Driver</b-dropdown-item
+            >
+            <b-dropdown-item :to="{ name: 'truckProfiles' }"
+              >Truck</b-dropdown-item
+            >
+            <b-dropdown-item :to="{ name: 'trailerProfiles' }"
+              >Trailer</b-dropdown-item
+            >
+          </b-nav-item-dropdown>
         </b-navbar-nav>
         <b-navbar-nav id="right">
-          <b-nav-item :to="{ name: 'login' }" id="loginBtn"
-            ><h1>Login</h1></b-nav-item
-          >
+          <b-nav-item>
+            <b-button @click="loggedState" id="loginBtn">
+              {{ isLogged !== null ? "Logout" : "Login" }}
+            </b-button>
+          </b-nav-item>
         </b-navbar-nav>
       </b-navbar-nav>
     </b-navbar>
   </div>
 </template>
-
+ /* eslint-disable */
 <script>
+export default {
+  data: () => ({
+    get isLogged() {
+      return localStorage.getItem("authUser");
+    },
+    set isLogged(x) {
+      localStorage.setItem("authUser", x);
+    },
+  }),
+  methods: {
+    loggedState() {
+      if (localStorage.getItem("authUser") !== null) {
+        this.authUser = null;
+        localStorage.clear();
+        this.$router.push("/login");
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -59,7 +94,9 @@
   padding: 0;
   margin: 0;
 }
-.nav-item p:hover {
+.nav-item p:hover,
+.nav-item span:hover,
+.nav-link dropdown:hover {
   color: orange !important;
 }
 #left {
@@ -72,15 +109,12 @@
 #right {
   width: 20%;
   justify-content: right;
-  padding-right: 20px;
   background-color: #242526;
 }
 #loginBtn {
   background-color: rgb(254, 155, 59);
-  height: 60px;
-}
-h1 {
-  font-size: 24px;
+  height: 50px;
   color: black;
+  font-weight: 550;
 }
 </style>
