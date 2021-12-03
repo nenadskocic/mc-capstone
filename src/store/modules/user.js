@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const resource_uri = "http://localhost:3000/auth";
+const resource_uri = "http://localhost:3000/user";
 
 export default {
     state: {
