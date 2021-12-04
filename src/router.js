@@ -6,8 +6,9 @@ import vue from 'vue'
 import Router from 'vue-router'
 import Login from './components/public/Login.vue'
 import Registration from './components/public/Registration.vue'
-import Dispatch from './components/user/Dispatch.vue'
+import DriverDispatch from './components/user/DriverDispatch.vue'
 
+import Order from './components/admin/Order.vue'
 import UserProfiles from './components/admin/UserProfiles.vue'
 import DriverProfiles from './components/admin/DriverProfiles.vue'
 import TruckProfiles from './components/admin/TruckProfiles.vue'
@@ -25,7 +26,7 @@ let router = new Router({
         { path: '/registration', name: 'registration', component: Registration, meta: { guest: true } },
 
         // User paths
-        { path: '/user/dispatch', name: 'dispatch', component: Dispatch, meta: { requiresAuth: true } },
+        { path: '/user/dispatch', name: 'dispatch', component: DriverDispatch, meta: { requiresAuth: true } },
 
         // Admin paths
         { path: '/admin/profile/user', name: 'userProfiles', component: UserProfiles, meta: { requiresAuth: true, is_admin: true } },
@@ -33,6 +34,7 @@ let router = new Router({
         { path: '/admin/profile/truck', name: 'truckProfiles', component: TruckProfiles, meta: { requiresAuth: true, is_admin: true } },
         { path: '/admin/profile/trailer', name: 'trailerProfiles', component: TrailerProfiles, meta: { requiresAuth: true, is_admin: true } },
         { path: '/admin/profile/client', name: 'clientProfiles', component: ClientProfiles, meta: { requiresAuth: true, is_admin: true } },
+        { path: '/admin/order', name: 'order', component: Order, meta: { requiresAuth: true, is_admin: true } },
     ]
 })
 
