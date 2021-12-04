@@ -6,6 +6,9 @@ import vue from 'vue'
 import Router from 'vue-router'
 import Login from './components/public/Login.vue'
 import Registration from './components/public/Registration.vue'
+import SecurityQuestions from './components/public/SecurityQuestions.vue'
+import PasswordChange from './components/public/PasswordChange.vue'
+
 import DriverDispatch from './components/user/DriverDispatch.vue'
 
 import Order from './components/admin/Order.vue'
@@ -24,6 +27,8 @@ let router = new Router({
         { path: '/', name: 'home', component: Login, meta: { guest: true }  },
         { path: '/login', name: 'login', component: Login, meta: { guest: true } },
         { path: '/registration', name: 'registration', component: Registration, meta: { guest: true } },
+        { path: '/securityquestions', name: 'securityquestions', component: SecurityQuestions, meta: { guest: true } },
+        { path: '/passwordchange', name: 'passwordchange', component: PasswordChange, meta: { guest: true } },
 
         // User paths
         { path: '/user/dispatch', name: 'dispatch', component: DriverDispatch, meta: { requiresAuth: true } },
