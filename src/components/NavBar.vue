@@ -14,12 +14,8 @@
           </b-navbar-brand>
         </b-navbar-nav>
         <b-navbar-nav class="mx-auto" id="middle">
-          <!-- <b-nav-item :to="{ name: 'login' }"><p>Home</p></b-nav-item>
-          <b-nav-item :to="{ name: 'about' }"><p>About Us</p></b-nav-item>
-          <b-nav-item :to="{ name: 'services' }"><p>Services</p></b-nav-item>
-          <b-nav-item :to="{ name: 'news' }"><p>News</p></b-nav-item>
-          <b-nav-item :to="{ name: 'team' }"><p>Our Team</p></b-nav-item>
-          <b-nav-item :to="{ name: 'contact' }"><p>Contact Us</p></b-nav-item> -->
+          <b-nav-item :to="{ name: 'dispatch' }"><p>Dispatch</p></b-nav-item>
+          <b-nav-item :to="{ name: 'order' }"><p>Order</p></b-nav-item>
           <b-nav-item-dropdown text="Profiles" right>
             <b-dropdown-item :to="{ name: 'userProfiles' }"
               >User</b-dropdown-item
