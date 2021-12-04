@@ -9,6 +9,7 @@ import driver from './modules/driver';
 import truck from './modules/truck';
 import trailer from './modules/trailer';
 import client from './modules/client';
+import orders from './modules/orders';
 
 Vue.use(Vuex);
 
@@ -19,5 +20,6 @@ export default new Vuex.Store({
         truck,
         trailer,
         client,
+        orders,
     }
 });
