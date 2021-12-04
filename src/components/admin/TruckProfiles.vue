@@ -133,8 +133,7 @@
                         <option value="Flatbed">Flatbed</option>
                         <option value="Semi-trailer">Semi-trailer</option>
                     </b-select>
-                </div>
-                
+                </div>   
               </b-td>
                <b-td>
                 <div class="view">
