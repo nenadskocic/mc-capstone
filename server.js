@@ -48,6 +48,7 @@ async function startup()
   });
   db.run('PRAGMA foreign_keys = ON');
 
+  await db.run("DROP TABLE IF EXISTS orders");
   await db.run("DROP TABLE IF EXISTS user");
   await db.run("DROP TABLE IF EXISTS user_address");  
   await db.run("DROP TABLE IF EXISTS user_auth");
@@ -56,6 +57,7 @@ async function startup()
   await db.run("DROP TABLE IF EXISTS client");
   await db.run("DROP TABLE IF EXISTS client_address");
 
+
   await db.run("CREATE TABLE user (user_id INTEGER PRIMARY KEY, first_name TEXT NOT NULL, last_name TEXT NOT NULL, user_email TEXT NOT NULL UNIQUE, sin_number INTEGER NOT NULL UNIQUE, license_number TEXT NOT NULL UNIQUE, home_phone INTEGER UNIQUE, cell_phone INTEGER UNIQUE, status TEXT NOT NULL)");
   await db.run("CREATE TABLE user_address (address_id INTEGER PRIMARY KEY, street_number INTEGER NOT NULL, street_name TEXT NOT NULL, city TEXT NOT NULL, province TEXT NOT NULL, postal_code TEXT NOT NULL, country TEXT NOT NULL, user_id INTEGER, FOREIGN KEY (user_id) REFERENCES user (user_id) ON DELETE CASCADE)");
   await db.run("CREATE TABLE user_auth (auth_id INTEGER PRIMARY KEY, username TEXT NOT NULL UNIQUE, hash_pwd TEXT NOT NULL, is_admin INTEGER NOT NULL)");
@@ -63,8 +65,8 @@ async function startup()
   await db.run("CREATE TABLE trailer (trailer_id INTEGER PRIMARY KEY, trailer_no INTEGER NOT NULL UNIQUE, trailer_make TEXT NOT NULL, trailer_year INTEGER NOT NULL, trailer_type TEXT NOT NULL, trailer_plate_no TEXT NOT NULL UNIQUE, trailer_length INTEGER NOT NULL, trailer_volume INTEGER NOT NULL, ride_type TEXT NOT NULL, trailer_status TEXT NOT NULL, truck_id INTEGER, FOREIGN KEY (truck_id) REFERENCES truck (truck_id) ON DELETE CASCADE)");
   await db.run("CREATE TABLE client (client_id INTEGER PRIMARY KEY, client_name TEXT NOT NULL UNIQUE, client_phone_no INTEGER NOT NULL UNIQUE, client_type TEXT NOT NULL, client_status TEXT NOT NULL)");
   await db.run("CREATE TABLE client_address (client_address_id INTEGER PRIMARY KEY, street_number INTEGER NOT NULL, street_name TEXT NOT NULL, city TEXT NOT NULL, province TEXT NOT NULL, postal_code TEXT NOT NULL, country TEXT NOT NULL, client_id INTEGER, FOREIGN KEY (client_id) REFERENCES client (client_id) ON DELETE CASCADE)");
-
-
+  await db.run("CREATE TABLE orders (order_id INTEGER PRIMARY KEY, weight INTEGER NOT NULL, skids INTEGER NOT NULL, cost INTEGER NOT NULL, pickup_date TEXT NOT NULL, delivery_date TEXT NOT NULL, status TEXT NOT NULL, client_id INTEGER, truck_id INTEGER, trailer_id INTEGER, FOREIGN KEY (client_id) REFERENCES client (client_id), FOREIGN KEY (truck_id) REFERENCES truck (truck_id), FOREIGN KEY (trailer_id) REFERENCES trailer (trailer_id) ON DELETE CASCADE)");
+  
   await db.run("INSERT INTO user (user_id, first_name, last_name, user_email, sin_number, license_number, home_phone, cell_phone, status) VALUES (null, 'Nenad', 'Skocic', 'nenad@jsdtransportation.ca', 111111, 'S4913-47535-73581', 9055782526, 3654764643, 'Active')");
   await db.run("INSERT INTO user_address (street_number, street_name, city, province, postal_code, country, user_id) VALUES (78, 'Sunrise Dr', 'Hamilton', 'ON', 'L8K 4C3', 'Canada', 1)");
   // await db.run("INSERT INTO user (user_id, first_name, last_name, user_email, sin_number, license_number, home_phone, cell_phone, status) VALUES (null, 'Sinisa', 'Radisa', 'sinisa@jsdtransportation.ca', 343434, 'S4813-47535-65781', 9055784526, 365856864, 'Active')");
@@ -462,7 +464,7 @@ app.put("/client_address/:id", async function(req, res)
  * API - Client_Info (Client & Client_Address JOIN)
  * 
  */
- app.get("/client_info", async function(req, res) {
+app.get("/client_info", async function(req, res) {
   const data = await db.all("SELECT * FROM client INNER JOIN client_address ON client.client_id = client_address.client_id");
   res.send(data);
 });
@@ -473,6 +475,32 @@ app.delete("/client_info/:id", async function(req, res)
   stmt.run(client_id);
   stmt.finalize();
   res.send(stmt);  
+});
+
+/**
+ * API - Orders
+ * 
+ */
+app.get("/orders", async function(req, res) {
+  const data = await db.all("SELECT order_id as id, * FROM orders");
+  res.send(data);
+});
+app.post("/orders", async function(req, res)
+{
+  const weight = req.body.weight;
+  const skids = req.body.skids;
+  const cost = req.body.cost;
+  const pickup_date = req.body.pickup_date;
+  const delivery_date = req.body.delivery_date;
+  const order_status = req.body.order_status;
+  const client_id = req.body.client_id;
+  const truck_id = req.body.truck_id;
+  const trailer_id = req.body.trailer_id;
+ 
+  const stmt = await db.prepare("INSERT INTO orders VALUES (?,?,?,?,?,?,?,?,?,?)");
+  stmt.run(null, weight, skids, cost, pickup_date, delivery_date, order_status, client_id, truck_id, trailer_id);
+  stmt.finalize();
+  res.json( { order: { weight: weight, skids: skids, cost: cost, pickup_date: pickup_date, delivery_date: delivery_date, order_status: order_status, client_id: client_id, truck_id: truck_id, trailer_id: trailer_id }}); 
 });
 
 
