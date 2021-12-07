@@ -271,7 +271,7 @@ export default {
     },
   },
   created() {
-    axios.get("http://159.65.218.19:3000client").then((res) => {
+    axios.get("http://159.65.218.19:3000/client").then((res) => {
       if (res.status === 200) {
         let data = res.data;
         for (var i in data) {
