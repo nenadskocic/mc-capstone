@@ -76,7 +76,7 @@ async function startup()
 
   await db.run("INSERT INTO trailer (trailer_id, trailer_no, trailer_make, trailer_year, trailer_type, trailer_plate_no, trailer_length, trailer_volume, ride_type, trailer_status, truck_id) VALUES (null, 37995, 'Great Dane', 2015, 'Reefer', 'M6540C', 50,  3001, 'Air', 'Active', 1)");
 
-  await db.run("INSERT INTO client (client_id, client_name, client_phone_no, client_type, client_status) VALUES (null, 'ABD GOUP', 9567171995, 'Importer', 'Active')");
+  await db.run("INSERT INTO client (client_id, client_name, client_phone_no, client_type, client_status) VALUES (null, 'ABD GROUP', 9567171995, 'Importer', 'Active')");
   await db.run("INSERT INTO client_address (client_address_id, street_number, street_name, city, province, postal_code, country, client_id) VALUES (null, 12122, 'Jeff Drive', 'Laredo', 'TX', '78045', 'USA', 1)");
   await db.run("INSERT INTO client (client_id, client_name, client_phone_no, client_type, client_status) VALUES (null, 'Fluke', 9055780677, 'Exporter', 'Active')");
   await db.run("INSERT INTO client_address (client_address_id, street_number, street_name, city, province, postal_code, country, client_id) VALUES (null, 450, 'Sherman Ave N', 'Hamilton', 'ON', 'L8L 8J6', 'Canada', 2)");
