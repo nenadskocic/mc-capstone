@@ -745,7 +745,7 @@ export default {
         };
 
         await axios
-          .post("http://159.65.218.19:3000driver", newDriver)
+          .post("http://159.65.218.19:3000/driver", newDriver)
           .then((res) => {
             if (res.data === "Duplicate") {
               this.modalErrors = "Data used by other user!";
