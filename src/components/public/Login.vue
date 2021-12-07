@@ -91,7 +91,7 @@ export default {
           username: this.username,
           password: this.password,
         };
-        axios.post("http://localhost:3000/login", user).then((res) => {
+        axios.post("http://159.65.218.19:3000/login", user).then((res) => {
           let is_admin = res.data.authUser[0].is_admin;
 
           localStorage.setItem("authUser", JSON.stringify(res.data.authUser));

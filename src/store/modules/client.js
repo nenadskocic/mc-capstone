@@ -47,6 +47,5 @@ export default {
             let clients = state.clients.filter(u => u.client_id != client_id)
             state.clients = clients;
         }
-
     }
 }
