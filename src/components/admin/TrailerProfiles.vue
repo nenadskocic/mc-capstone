@@ -728,7 +728,7 @@ h4 {
   grid-auto-flow: column;
 }
 #modalError li {
-  list-style-type: decimal;
+  list-style-type: none;
   margin-left: 50px;
   text-align: left;
 }
