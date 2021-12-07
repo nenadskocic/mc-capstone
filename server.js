@@ -164,7 +164,7 @@ app.post("/driver", async function(req, res)
     res.status(200).json("Duplicate");
   } else {
     const stmt = await db.prepare("INSERT INTO user VALUES (?,?,?,?,?,?,?,?,?)");
-    stmt.run(null, first_name, last_name, user_email, home_phone, cell_phone, sin_number, license_number, status);
+    stmt.run(null, first_name, last_name, user_email, sin_number, license_number, home_phone, cell_phone, status);
     stmt.finalize();
     res.json( { driver: { first_name: first_name, last_name: last_name, user_email: user_email, home_phone: home_phone, cell_phone: cell_phone, sin_number: sin_number, license_number: license_number, status: status }});
   }
