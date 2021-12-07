@@ -641,7 +641,7 @@ export default {
               this.modalErrors = "Data used by other user!";
             } else {
               axios.post(
-                "http://localhost:3000/client_address",
+                "http://159.65.218.19:3000/client_address",
                 newClientAddress
               );
               window.location = "/admin/profile/client";
