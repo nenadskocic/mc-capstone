@@ -479,7 +479,7 @@ export default {
       ) {
         await axios
           .put(
-            `http://localhost:3000/trailer/${editedTrailer.trailer_id}`,
+            `http://159.65.218.19:3000/trailer/${editedTrailer.trailer_id}`,
             editedTrailer
           )
           .then((res) => {
