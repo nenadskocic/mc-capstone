@@ -685,11 +685,11 @@ export default {
       ];
 
       const axios1 = axios.put(
-        `http://localhost:3000/driver/${editedDriver[0].user_id}`,
+        `http://159.65.218.19:3000/driver/${editedDriver[0].user_id}`,
         editedDriver
       );
       const axios2 = axios.put(
-        `http://localhost:3000/driver_address/${editedDriverAddress[0].address_id}`,
+        `http://159.65.218.19:3000/driver_address/${editedDriverAddress[0].address_id}`,
         editedDriverAddress
       );
 
@@ -745,13 +745,13 @@ export default {
         };
 
         await axios
-          .post("http://localhost:3000/driver", newDriver)
+          .post("http://159.65.218.19:3000driver", newDriver)
           .then((res) => {
             if (res.data === "Duplicate") {
               this.modalErrors = "Data used by other user!";
             } else {
               axios.post(
-                "http://localhost:3000/driver_address",
+                "http://159.65.218.19:3000/driver_address",
                 newDriverAddress
               );
               window.location = "/admin/profile/driver";

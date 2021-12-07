@@ -253,7 +253,7 @@ export default {
           trailer_id: this.trailer_id,
           order_status: this.order_status,
         };
-        await axios.post("http://localhost:3000/orders", order);
+        await axios.post("http://159.65.218.19:3000/orders", order);
         window.location = "/admin/order";
       }
     },
@@ -271,7 +271,7 @@ export default {
     },
   },
   created() {
-    axios.get("http://localhost:3000/client").then((res) => {
+    axios.get("http://159.65.218.19:3000client").then((res) => {
       if (res.status === 200) {
         let data = res.data;
         for (var i in data) {
@@ -284,7 +284,7 @@ export default {
         }
       }
     });
-    axios.get("http://localhost:3000/truck").then((res) => {
+    axios.get("http://159.65.218.19:3000/truck").then((res) => {
       if (res.status === 200) {
         let data = res.data;
         for (var i in data) {
@@ -292,7 +292,7 @@ export default {
         }
       }
     });
-    axios.get("http://localhost:3000/trailer").then((res) => {
+    axios.get("http://159.65.218.19:3000/trailer").then((res) => {
       if (res.status === 200) {
         let data = res.data;
         for (var i in data) {

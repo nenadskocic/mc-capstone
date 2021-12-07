@@ -4,7 +4,7 @@
  */
  import axios from 'axios'
 
- const resource_uri = "http://localhost:3000/orders";
+ const resource_uri = "http://159.65.218.19:3000/orders";
  
  export default {
      state: {

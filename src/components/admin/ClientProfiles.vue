@@ -585,11 +585,11 @@ export default {
       ];
 
       const axios1 = axios.put(
-        `http://localhost:3000/client/${editedClient[0].client_id}`,
+        `http://159.65.218.19:3000/client/${editedClient[0].client_id}`,
         editedClient
       );
       const axios2 = axios.put(
-        `http://localhost:3000/client_address/${editedClientAddress[0].client_address_id}`,
+        `http://159.65.218.19:3000/client_address/${editedClientAddress[0].client_address_id}`,
         editedClientAddress
       );
 
@@ -635,7 +635,7 @@ export default {
         };
 
         await axios
-          .post("http://localhost:3000/client", newClient)
+          .post("http://159.65.218.19:3000/client", newClient)
           .then((res) => {
             if (res.data === "Duplicate") {
               this.modalErrors = "Data used by other user!";

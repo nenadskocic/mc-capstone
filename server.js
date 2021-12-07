@@ -20,7 +20,7 @@ const user_username = "user.user";
 const pass2 = "user";
 
 var corsOptions = {
-  origin: "http://localhost:8080",
+  origin: "http://159.65.218.19",
   credentials: true,
   optionSuccessStatus: 200
 };

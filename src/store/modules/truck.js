@@ -4,7 +4,7 @@
  */
 import axios from 'axios'
 
-const resource_uri = "http://localhost:3000/truck";
+const resource_uri = "http://159.65.218.19:3000/truck";
 
 export default {
     state: {

@@ -134,7 +134,7 @@ export default {
             is_admin: is_admin,
           };
           await axios
-            .post("http://localhost:3000/register", user)
+            .post("http://159.65.218.19:3000/register", user)
             .then((res) => {
               if (res.data === "Duplicate") {
                 this.error.push("Username provided already exists!");

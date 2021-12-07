@@ -536,7 +536,7 @@ export default {
             trailer_status: this.trailer_status,
           };
           await axios
-            .post("http://localhost:3000/trailer", trailer)
+            .post("http://159.65.218.19:3000/trailer", trailer)
             .then((res) => {
               if (res.data === "Duplicate") {
                 this.modalErrors.push("Trailer no. or trailer no. duplicate!");

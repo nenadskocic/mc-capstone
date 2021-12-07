@@ -401,7 +401,7 @@ export default {
       ) {
         await axios
           .put(
-            `http://localhost:3000/truck/${editedTruck.truck_id}`,
+            `http://159.65.218.19:3000/truck/${editedTruck.truck_id}`,
             editedTruck
           )
           .then((res) => {
@@ -446,15 +446,17 @@ export default {
             truck_type: this.truck_type,
             truck_status: this.truck_status,
           };
-          await axios.post("http://localhost:3000/truck", truck).then((res) => {
-            if (res.data === "Duplicate") {
-              this.modalErrors.push("Truck no. or plate no. duplicate!");
-            } else {
-              this.truckValid = true;
-              this.modalVis = false;
-              window.location = "/admin/profile/truck";
-            }
-          });
+          await axios
+            .post("http://159.65.218.19:3000/truck", truck)
+            .then((res) => {
+              if (res.data === "Duplicate") {
+                this.modalErrors.push("Truck no. or plate no. duplicate!");
+              } else {
+                this.truckValid = true;
+                this.modalVis = false;
+                window.location = "/admin/profile/truck";
+              }
+            });
         }
       } catch (error) {
         console.log(error);
@@ -564,7 +566,6 @@ tr.disabled {
 #deleteBtn {
   background-color: lightcoral;
 }
-
 
 /** -------------- EDIT ---------- */
 [v-cloak] {

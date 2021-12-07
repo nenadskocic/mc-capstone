@@ -294,7 +294,7 @@ export default {
             password: this.password,
           };
           await axios
-            .post("http://localhost:3000/register", user)
+            .post("http://159.65.218.19:3000/register", user)
             .then((res) => {
               if (res.data === "Duplicate") {
                 this.errors.push("Username provided already exists!");
@@ -317,7 +317,10 @@ export default {
         this.editUsernameErr = "Please input a value.";
       } else {
         await axios
-          .put(`http://localhost:3000/user/${editedUser.auth_id}`, editedUser)
+          .put(
+            `http://159.65.218.19:3000/user/${editedUser.auth_id}`,
+            editedUser
+          )
           .then((res) => {
             if (res.data === "Duplicate") {
               this.editUsernameErr = "Duplicate!";
